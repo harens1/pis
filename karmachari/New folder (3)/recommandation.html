@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>सिफारिस फारम</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn-group button {
+            width: 24%;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">कर्मचारी व्यवस्थापन प्रणाली</h1>
+            <nav class="site-nav" role="navigation">
+                <ul>
+                    <li><a href="../index.php">गृहपृष्ठ</a></li>
+                    <li><a href="../employ_list.php">कर्मचारी सूची</a></li>
+                    <li><a href="post_employee.html">कर्मचारी विवरण</a></li>
+                    <li><a href="../recommendation.php">सिफारिस</a></li>
+                    <li><a href="../transfer.php">सरुवा</a></li>
+                    <li><a href="../promotion.php">बढुवा</a></li>
+                    <li><a href="../leave.php">बिदा</a></li>
+                    <li><a href="../salary.php">पारिश्रामिक</a></li>
+                    <li><a href="../retirement.php">अवकाश</a></li>
+                    <li><a href="../law.php">कानून</a></li>
+                    <li><a href="formfill.html">फाराम</a></li>
+                    <li><a href="../notice.html">सूचना</a></li>
+                    <li><a href="../vacancy.html">दरवन्दी</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <h2>सिफारिस फारम</h2>
+        <form action="recommendation.php" method="POST">
+            <div class="form-group">
+                <label>सिफारिस भएको मा:</label>
+                <select name="recommendation_type" required>
+                    <option value="संघीय लोकसेवा आयोग">संघीय लोकसेवा आयोग</option>
+                    <option value="बागमती प्रदेश लोकसेवा आयोग">बागमती प्रदेश लोकसेवा आयोग</option>
+                    <option value="अन्य">अन्य</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>सिफारिस मिति:</label>
+                <input type="date" name="recommendation_date" required>
+            </div>
+            <div class="form-group">
+                <label>नियुक्ति मिति:</label>
+                <input type="date" name="appointment_date">
+            </div>
+            <div class="form-group">
+                <label>समायोजन मिति:</label>
+                <input type="date" name="adjustment_date">
+            </div>
+            <div class="form-group">
+                <label>सरुवा मिति:</label>
+                <input type="date" name="transfer_date">
+            </div>
+            <div class="form-group">
+                <label>बढुवा मिति:</label>
+                <input type="date" name="promotion_date">
+            </div>
+            <div class="form-group">
+                <label>स्तर वृद्धि मिति:</label>
+                <input type="date" name="level_up_date">
+            </div>
+            <div class="form-group">
+                <label>काज तोकेको मिति:</label>
+                <input type="date" name="temporary_assign_date">
+            </div>
+            <div class="form-group">
+                <label>काज खटाएको कार्यालय:</label>
+                <input type="text" name="temporary_office">
+            </div>
+            <div class="form-group">
+                <label>लामो बिदा भए:</label>
+                <select name="leave_type" id="leaveType" onchange="showLeaveDateField()">
+                    <option value="">छैन</option>
+                    <option value="प्रसुति बिदा">प्रसुति बिदा</option>
+                    <option value="बेतलवी बिदा">बेतलवी बिदा</option>
+                    <option value="अध्ययन विदा">अध्ययन विदा</option>
+                    <option value="असाधारण विदा">असाधारण विदा</option>
+                    <option value="अनुपस्थित">अनुपस्थित</option>
+                </select>
+            </div>
+            <div class="form-group" id="leaveDateField" style="display: none;">
+                <label>बिदा सुरु मिति:</label>
+                <input type="date" name="leave_start_date">
+            </div>
+            <div class="btn-group">
+                <button type="submit">Submit</button>
+                <button type="button" onclick="window.location.href='index.html'">गृहपृष्ठ</button>
+                <button type="button" onclick="window.location.href='next_page.html'">अर्को पृष्ठ</button>
+                <button type="button" onclick="window.location.href='details.php'">विवरणमा जानुहोस्</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function showLeaveDateField() {
+            var leaveType = document.getElementById("leaveType").value;
+            var leaveDateField = document.getElementById("leaveDateField");
+
+            if (leaveType) {
+                leaveDateField.style.display = "block";
+            } else {
+                leaveDateField.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

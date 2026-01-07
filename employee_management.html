@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कर्मचारी व्यवस्थापन - खडक नगरपालिका</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="print.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Kalimati', 'Arial Unicode MS', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin: 30px 0 20px;
+            color: #2c3e50;
+        }
+
+        .page-title h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        /* Search और Filter */
+        .search-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .search-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .search-row input,
+        .search-row select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'Kalimati', Arial;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'Kalimati', Arial;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .btn-info {
+            background: #1abc9c;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #16a085;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .data-table thead {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+        }
+
+        .data-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .data-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .data-table tbody tr:nth-child(even) {
+            background: #fafbfc;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .action-buttons button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Kalimati', Arial;
+        }
+
+        .btn-edit {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #e67e22;
+        }
+
+        .btn-view {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: #2980b9;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c0392b;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #3498db;
+        }
+
+        .stat-card h3 {
+            color: #7f8c8d;
+            font-size: 12px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .stat-card p {
+            color: #95a5a6;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .stat-card.active {
+            border-left-color: #27ae60;
+        }
+
+        .stat-card.inactive {
+            border-left-color: #e74c3c;
+        }
+
+        .stat-card.contract {
+            border-left-color: #f39c12;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: #000;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #95a5a6;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #bdc3c7;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        @media print {
+            .search-section,
+            .button-group,
+            .navbar {
+                display: none !important;
+            }
+
+            .table-container {
+                box-shadow: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-row {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .data-table {
+                font-size: 12px;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 8px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <script src="bs-converter.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar-style">
+        <a href="index.html" title="गृह पृष्ठ">
+            <i class="fas fa-home"></i> गृह
+        </a>
+        <a href="employees_all.html" title="सबै कर्मचारीहरु">
+            <i class="fas fa-list"></i> सबै कर्मचारी
+        </a>
+        <a href="employee_management.html" title="कर्मचारी व्यवस्थापन" class="active">
+            <i class="fas fa-users-cog"></i> कर्मचारी व्यवस्थापन
+        </a>
+        <a href="biodata.html" title="जीवनी">
+            <i class="fas fa-id-card"></i> जीवनी
+        </a>
+        <a href="darwandi_report.html" title="दरवन्दी रिपोर्ट">
+            <i class="fas fa-file-alt"></i> दरवन्दी
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="page-title">
+            <h1><i class="fas fa-users-cog"></i> कर्मचारी व्यवस्थापन</h1>
+            <p>कर्मचारीहरुको सम्पूर्ण विवरण सञ्चालन गर्नुहोस्</p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-section" id="statsSection">
+            <div class="stat-card active">
+                <h3><i class="fas fa-briefcase"></i> कुल कर्मचारी</h3>
+                <div class="number" id="totalEmployees">0</div>
+                <p>दर्ता गरिएको कर्मचारीको कुल संख्या</p>
+            </div>
+            <div class="stat-card active">
+                <h3><i class="fas fa-user-check"></i> सक्रिय</h3>
+                <div class="number" id="activeEmployees">0</div>
+                <p>वर्तमानमा सेवारत कर्मचारी</p>
+            </div>
+            <div class="stat-card inactive">
+                <h3><i class="fas fa-user-clock"></i> निष्क्रिय</h3>
+                <div class="number" id="inactiveEmployees">0</div>
+                <p>छुट्टि र निष्क्रिय कर्मचारी</p>
+            </div>
+            <div class="stat-card contract">
+                <h3><i class="fas fa-handshake"></i> करार</h3>
+                <div class="number" id="contractEmployees">0</div>
+                <p>करार आधारित कर्मचारी</p>
+            </div>
+        </div>
+
+        <!-- Search and Filter Section -->
+        <div class="search-section">
+            <div class="search-row">
+                <input type="text" id="searchInput" placeholder="नाम, पद वा विभाग खोज्नुहोस्..." onkeyup="filterEmployees()">
+                <select id="statusFilter" onchange="filterEmployees()">
+                    <option value="">सबै अवस्था</option>
+                    <option value="सक्रिय">सक्रिय</option>
+                    <option value="निष्क्रिय">निष्क्रिय</option>
+                    <option value="अवकाश">अवकाश</option>
+                    <option value="सेवामुक्त">सेवामुक्त</option>
+                </select>
+                <select id="departmentFilter" onchange="filterEmployees()">
+                    <option value="">सबै विभाग</option>
+                </select>
+            </div>
+            <div class="button-group">
+                <button onclick="printTable()" class="btn btn-info">
+                    <i class="fas fa-print"></i> मुद्रण गर्नुहोस्
+                </button>
+                <button onclick="exportToCSV()" class="btn btn-success">
+                    <i class="fas fa-download"></i> CSV डाउनलोड गर्नुहोस्
+                </button>
+                <button onclick="refreshStats()" class="btn btn-primary">
+                    <i class="fas fa-sync"></i> ताजा गर्नुहोस्
+                </button>
+            </div>
+        </div>
+
+        <!-- Employees Table -->
+        <div class="table-container">
+            <table class="data-table" id="employeesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>नाम</th>
+                        <th>पद</th>
+                        <th>विभाग</th>
+                        <th>फोन</th>
+                        <th>अवस्था</th>
+                        <th>नियुक्ति मिति</th>
+                        <th>कार्य</th>
+                    </tr>
+                </thead>
+                <tbody id="employeesList">
+                    <tr>
+                        <td colspan="8" class="no-data">
+                            <i class="fas fa-inbox"></i> कुनै कर्मचारी दर्ता गरिएको छैन
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Employee Detail Modal -->
+    <div id="employeeModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">कर्मचारी विवरण</h2>
+            <div id="employeeDetails" style="margin-top: 20px;"></div>
+            <div style="margin-top: 20px; text-align: center;">
+                <button onclick="closeModal()" class="btn btn-primary">बन्द गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Database Functions
+        function getDatabase() {
+            const stored = localStorage.getItem('pisDatabase');
+            if (stored) {
+                return JSON.parse(stored);
+            }
+            return { employees: [], darwandi: [], users: [], systemLogs: [] };
+        }
+
+        function saveDatabase(db) {
+            localStorage.setItem('pisDatabase', JSON.stringify(db));
+        }
+
+        // Load employees into table
+        function loadEmployees() {
+            const db = getDatabase();
+            const tbody = document.getElementById('employeesList');
+
+            if (db.employees.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="no-data"><i class="fas fa-inbox"></i> कुनै कर्मचारी दर्ता गरिएको छैन</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = db.employees.map((emp, index) => `
+                <tr>
+                    <td><strong>${emp.id}</strong></td>
+                    <td>${emp.fullName || '-'}</td>
+                    <td>${emp.position || '-'}</td>
+                    <td>${emp.department || '-'}</td>
+                    <td>${emp.phone || '-'}</td>
+                    <td>
+                        <span style="padding: 4px 8px; border-radius: 4px; font-size: 12px; 
+                            ${emp.status === 'सक्रिय' ? 'background: #d4edda; color: #155724;' : 
+                              emp.status === 'निष्क्रिय' ? 'background: #f8d7da; color: #721c24;' : 
+                              'background: #fff3cd; color: #856404;'}">
+                            ${emp.status || 'अज्ञात'}
+                        </span>
+                    </td>
+                    <td>${emp.joinDate || '-'}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button onclick="viewEmployee(${index})" class="btn-view" title="विवरण हेर्नुहोस्">
+                                <i class="fas fa-eye"></i> हेर्नुहोस्
+                            </button>
+                            <button onclick="editEmployee(${index})" class="btn-edit" title="सम्पादन गर्नुहोस्">
+                                <i class="fas fa-edit"></i> सम्पादन
+                            </button>
+                            <button onclick="deleteEmployee(${index})" class="btn-delete" title="मेटाउनुहोस्">
+                                <i class="fas fa-trash"></i> मेटाउनुहोस्
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Load department filter options
+            const departments = [...new Set(db.employees.map(e => e.department).filter(Boolean))];
+            const deptSelect = document.getElementById('departmentFilter');
+            const currentValue = deptSelect.value;
+            deptSelect.innerHTML = '<option value="">सबै विभाग</option>' +
+                departments.map(d => `<option value="${d}">${d}</option>`).join('');
+            deptSelect.value = currentValue;
+        }
+
+        // View employee details
+        function viewEmployee(index) {
+            const db = getDatabase();
+            const emp = db.employees[index];
+
+            if (!emp) return;
+
+            const modal = document.getElementById('employeeModal');
+            document.getElementById('modalTitle').textContent = `${emp.fullName} - विस्तृत विवरण`;
+
+            const details = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <h4 style="border-bottom: 2px solid #3498db; padding-bottom: 8px; margin-bottom: 12px;">व्यक्तिगत विवरण</h4>
+                        <p><strong>ID:</strong> ${emp.id}</p>
+                        <p><strong>नाम:</strong> ${emp.fullName}</p>
+                        <p><strong>जन्म मिति:</strong> ${emp.dateOfBirth || '-'}</p>
+                        <p><strong>बाबु को नाम:</strong> ${emp.fatherName || '-'}</p>
+                        <p><strong>नागरिकता:</strong> ${emp.nationalId || '-'}</p>
+                    </div>
+                    <div>
+                        <h4 style="border-bottom: 2px solid #27ae60; padding-bottom: 8px; margin-bottom: 12px;">पद सम्बन्धी विवरण</h4>
+                        <p><strong>पद:</strong> ${emp.position}</p>
+                        <p><strong>तह:</strong> ${emp.serviceLevel || '-'}</p>
+                        <p><strong>सेवा समूह:</strong> ${emp.serviceGroup || '-'}</p>
+                        <p><strong>विभाग:</strong> ${emp.department}</p>
+                        <p><strong>प्रकार:</strong> ${emp.employeeType}</p>
+                    </div>
+                    <div>
+                        <h4 style="border-bottom: 2px solid #e74c3c; padding-bottom: 8px; margin-bottom: 12px;">सम्पर्क विवरण</h4>
+                        <p><strong>फोन:</strong> ${emp.phone}</p>
+                        <p><strong>वैकल्पिक:</strong> ${emp.alternatePhone || '-'}</p>
+                        <p><strong>इमेल:</strong> ${emp.email || '-'}</p>
+                        <p><strong>ठेगाना:</strong> ${emp.address || '-'}</p>
+                        <p><strong>आपतकालीन:</strong> ${emp.emergencyPhone || '-'}</p>
+                    </div>
+                    <div>
+                        <h4 style="border-bottom: 2px solid #f39c12; padding-bottom: 8px; margin-bottom: 12px;">नियुक्ति विवरण</h4>
+                        <p><strong>नियुक्ति मिति:</strong> ${emp.joinDate}</p>
+                        <p><strong>तलब:</strong> रु. ${emp.salary || 0}</p>
+                        <p><strong>भत्ता:</strong> रु. ${emp.allowance || 0}</p>
+                        <p><strong>अवस्था:</strong> ${emp.status}</p>
+                    </div>
+                    <div>
+                        <h4 style="border-bottom: 2px solid #9b59b6; padding-bottom: 8px; margin-bottom: 12px;">शैक्षिक योग्यता</h4>
+                        <p><strong>योग्यता:</strong> ${emp.qualification || '-'}</p>
+                        <p><strong>विशेषज्ञता:</strong> ${emp.specialization || '-'}</p>
+                        <p><strong>अनुभव:</strong> ${emp.experienceYears || 0} वर्ष</p>
+                        <p><strong>प्रशिक्षण:</strong> ${emp.trainingCompleted || '-'}</p>
+                    </div>
+                    <div>
+                        <h4 style="border-bottom: 2px solid #1abc9c; padding-bottom: 8px; margin-bottom: 12px;">अन्य जानकारी</h4>
+                        <p><strong>PAN:</strong> ${emp.panNumber || '-'}</p>
+                        <p><strong>पासपोर्ट:</strong> ${emp.passportNumber || '-'}</p>
+                        <p><strong>बैंक खाता:</strong> ${emp.bankAccount || '-'}</p>
+                        <p><strong>दर्ता मिति:</strong> ${emp.createdAt ? new Date(emp.createdAt).toLocaleDateString('ne-NP') : '-'}</p>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('employeeDetails').innerHTML = details;
+            modal.classList.add('active');
+        }
+
+        // Edit employee
+        function editEmployee(index) {
+            alert('सम्पादन सुविधा विकास अन्तर्गत छ।');
+        }
+
+        // Delete employee
+        function deleteEmployee(index) {
+            const db = getDatabase();
+            const emp = db.employees[index];
+
+            if (confirm(`के तपाईं ${emp.fullName} को रेकर्ड मेटाउन निश्चित हुनुहुन्छ?`)) {
+                db.employees.splice(index, 1);
+                saveDatabase(db);
+                loadEmployees();
+                refreshStats();
+                alert('कर्मचारी रेकर्ड मेटाइयो।');
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('employeeModal').classList.remove('active');
+        }
+
+        // Filter employees
+        function filterEmployees() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const deptFilter = document.getElementById('departmentFilter').value;
+            const db = getDatabase();
+
+            const filtered = db.employees.filter(emp =>
+                (emp.fullName.toLowerCase().includes(searchTerm) ||
+                 emp.position.toLowerCase().includes(searchTerm) ||
+                 emp.department?.toLowerCase().includes(searchTerm)) &&
+                (statusFilter === '' || emp.status === statusFilter) &&
+                (deptFilter === '' || emp.department === deptFilter)
+            );
+
+            const tbody = document.getElementById('employeesList');
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="no-data">कोनै परिणाम भेटिएन</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map((emp, index) => {
+                const actualIndex = db.employees.indexOf(emp);
+                return `
+                <tr>
+                    <td><strong>${emp.id}</strong></td>
+                    <td>${emp.fullName || '-'}</td>
+                    <td>${emp.position || '-'}</td>
+                    <td>${emp.department || '-'}</td>
+                    <td>${emp.phone || '-'}</td>
+                    <td>
+                        <span style="padding: 4px 8px; border-radius: 4px; font-size: 12px; 
+                            ${emp.status === 'सक्रिय' ? 'background: #d4edda; color: #155724;' : 
+                              emp.status === 'निष्क्रिय' ? 'background: #f8d7da; color: #721c24;' : 
+                              'background: #fff3cd; color: #856404;'}">
+                            ${emp.status || 'अज्ञात'}
+                        </span>
+                    </td>
+                    <td>${emp.joinDate || '-'}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button onclick="viewEmployee(${actualIndex})" class="btn-view">
+                                <i class="fas fa-eye"></i> हेर्नुहोस्
+                            </button>
+                            <button onclick="editEmployee(${actualIndex})" class="btn-edit">
+                                <i class="fas fa-edit"></i> सम्पादन
+                            </button>
+                            <button onclick="deleteEmployee(${actualIndex})" class="btn-delete">
+                                <i class="fas fa-trash"></i> मेटाउनुहोस्
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            }).join('');
+        }
+
+        // Refresh Statistics
+        function refreshStats() {
+            const db = getDatabase();
+            const total = db.employees.length;
+            const active = db.employees.filter(e => e.status === 'सक्रिय').length;
+            const inactive = db.employees.filter(e => e.status === 'निष्क्रिय').length;
+            const contract = db.employees.filter(e => e.employeeType === 'करार').length;
+
+            document.getElementById('totalEmployees').textContent = total;
+            document.getElementById('activeEmployees').textContent = active;
+            document.getElementById('inactiveEmployees').textContent = inactive;
+            document.getElementById('contractEmployees').textContent = contract;
+        }
+
+        // Print table
+        function printTable() {
+            window.print();
+        }
+
+        // Export to CSV
+        function exportToCSV() {
+            const db = getDatabase();
+            if (db.employees.length === 0) {
+                alert('कुनै कर्मचारी डाटा नछ।');
+                return;
+            }
+
+            const headers = ['ID', 'नाम', 'पद', 'विभाग', 'फोन', 'इमेल', 'अवस्था', 'नियुक्ति मिति', 'तलब'];
+            const rows = db.employees.map(emp => [
+                emp.id,
+                emp.fullName,
+                emp.position,
+                emp.department,
+                emp.phone,
+                emp.email,
+                emp.status,
+                emp.joinDate,
+                emp.salary
+            ]);
+
+            let csv = headers.join(',') + '\n';
+            rows.forEach(row => {
+                csv += row.map(cell => `"${cell}"`).join(',') + '\n';
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'कर्मचारी_विवरण_' + new Date().toLocaleDateString('ne-NP') + '.csv';
+            link.click();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadEmployees();
+            refreshStats();
+        });
+    </script>
+</body>
+</html>

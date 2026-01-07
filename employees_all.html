@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>सबै कर्मचारीहरू - खडक नगरपालिका</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kalimati:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body{font-family:'Kalimati', Arial, sans-serif;background:#f5f7fa;color:#222;margin:0;padding:20px}
+        .container{max-width:1100px;margin:20px auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 6px 18px rgba(15,30,50,0.06)}
+        table{width:100%;border-collapse:collapse}
+        th,td{padding:10px;border-bottom:1px solid #eee;text-align:left}
+        th{background:#3498db;color:#fff}
+        .nav{margin-bottom:12px}
+        .nav a{margin-right:8px;text-decoration:none;color:#3498db}
+        .search{margin-bottom:12px}
+    </style>
+    <script src="bs-converter.js"></script>
+    <link rel="stylesheet" href="print.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar-style">
+            <a href="index.html"><i class="fas fa-home"></i>मुख्य पृष्ठ</a>
+            <a href="biodata.html"><i class="fas fa-id-card"></i>बायोडाटा</a>
+            <a href="darwandi_form.html"><i class="fas fa-file-alt"></i>दरवन्दी फारम</a>
+            <a href="darwandi_report.html"><i class="fas fa-file-contract"></i>दरवन्दी रिपोर्ट</a>
+        </div>
+
+        <h2>सबै कर्मचारीहरू</h2>
+
+        <div class="search">
+            <input id="q" placeholder="नाम, पद, शाखा खोज्नुहोस्" style="width:60%;padding:8px;border:1px solid #ddd;border-radius:4px;" oninput="renderTable()">
+            <button onclick="printTable()" style="margin-left:8px;padding:8px 12px;background:#27ae60;color:#fff;border:none;border-radius:4px;cursor:pointer;">🖨️ प्रिन्ट</button>
+            <button onclick="exportEmployeeCSV()" style="margin-left:4px;padding:8px 12px;background:#3498db;color:#fff;border:none;border-radius:4px;cursor:pointer;">📥 CSV</button>
+        </div>
+
+        <div id="tableWrap">
+            <table id="empTable">
+                <thead>
+                    <tr><th>#</th><th>नाम</th><th>पद</th><th>प्रकार</th><th>शाखा</th><th>सम्पर्क</th><th>नियुक्ति मिति (BS)</th><th>कार्य</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const DB_NAME = 'khadak_municipality_db';
+        function getDB(){return JSON.parse(localStorage.getItem(DB_NAME)||'{}')}
+
+        function bsDisplay(emp){
+            if(emp.joinDate) return emp.joinDate;
+            if(emp.joinDateGregorian && window.bsConverter) return bsConverter.gregorianToBs(emp.joinDateGregorian);
+            return '-';
+        }
+
+        function renderTable(){
+            const db=getDB(); const list = db.employees||[];
+            const q=(document.getElementById('q').value||'').toLowerCase();
+            const tbody=document.querySelector('#empTable tbody'); tbody.innerHTML='';
+            list.forEach((emp,i)=>{
+                const text = `${emp.fullName} ${emp.position} ${emp.department}`.toLowerCase();
+                if(q && !text.includes(q)) return;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${i+1}</td>
+                    <td>${emp.fullName}</td>
+                    <td>${emp.position}</td>
+                    <td>${emp.employeeType||'-'}</td>
+                    <td>${emp.department||'-'}</td>
+                    <td>${emp.phone||'-'}</td>
+                    <td>${bsDisplay(emp)}</td>
+                    <td><a href="employee_report.html?id=${emp.id}" target="_blank">हेर्नुहोस्</a></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function printTable(){
+            window.print();
+        }
+
+        function exportEmployeeCSV(){
+            const db=getDB(); const list=db.employees||[];
+            let csv='क्र.सं.,नाम,पद,प्रकार,शाखा,सम्पर्क,नियुक्ति मिति (BS)\n';
+            list.forEach((e,i)=>{
+                csv+=`${i+1},"${e.fullName}","${e.position}","${e.employeeType||''}","${e.department||''}","${e.phone||''}","${bsDisplay(e)}"\n`;
+            });
+            const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+            const link=document.createElement('a');
+            link.href=URL.createObjectURL(blob);
+            link.download='employees_'+new Date().getTime()+'.csv';
+            link.click();
+        }
+
+        document.addEventListener('DOMContentLoaded', renderTable);
+    </script>
+</body>
+</html>

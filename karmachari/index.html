@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कर्मचारी विवरण</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">कर्मचारी व्यवस्थापन प्रणाली</h1>
+            <nav class="site-nav" role="navigation">
+                <ul>
+                    <li><a href="index.php">गृहपृष्ठ</a></li>
+                    <li><a href="employ_list.php">कर्मचारी सूची</a></li>
+                    <li><a href="post_employee.php">कर्मचारी विवरण</a></li>
+                    <li><a href="recommendation.php">सिफारिस</a></li>
+                    <li><a href="transfer.php">सरुवा</a></li>
+                    <li><a href="promotion.php">बढुवा</a></li>
+                    <li><a href="leave.php">बिदा</a></li>
+                    <li><a href="salary.php">पारिश्रामिक</a></li>
+                    <li><a href="retirement.php">अवकाश</a></li>
+                    <li><a href="law.php">कानून</a></li>
+                    <li><a href="formfill.html">फाराम</a></li>
+                    <li><a href="notice.html">सूचना</a></li>
+                    <li><a href="vacancy.html">दरवन्दी</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <section class="hero">
+        <div class="container hero-inner">
+            <h2>कर्मचारी व्यवस्थापन प्रणाली</h2>
+            <p>सहज पहुँच — कर्मचारी सूची, नयाँ प्रविष्टि र प्रशासनिक फारामहरू</p>
+            <div class="actions">
+                <a class="btn primary" href="employ_list.php">कर्मचारी सूची</a>
+                <a class="btn alt" href="post_employee.php">नयाँ कर्मचारी</a>
+                <a class="btn ghost" href="recommendation.php">सिफारिस फारम</a>
+                <a class="btn ghost" href="transfer.php">सरुवा</a>
+                <a class="btn ghost" href="formfill.html">फाराम</a>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <h2 style="text-align:center; margin-top:18px">समग्र कर्मचारी विवरण</h2>
+        <!-- खोज्नुहोस् इनपुट बक्स र बटन -->
+        <div class="search-container">
+            <i class="fa fa-search"></i>
+            <input type="text" id="search-input" placeholder="बे.न.पा.नं. वा नाम खोज्नुहोस्">
+            <button onclick="searchEmployee()" class="btn primary">खोज्नुहोस्</button>
+        </div>
+        <div id="no-result" class="no-result"></div>
+
+        <table id="employee-table">
+            <tr>
+                <th>क्र.सं.</th>
+                <th>बे.न.पा.नं.</th>
+                <th>क.सं.नं.</th>
+                <th>नाम</th>
+                <th>पद</th>
+                <th>तह</th>
+                <th>सेवा</th>
+                <th>समूह</th>
+                <th>शाखा</th>
+                <th>उपशाखा</th>
+                <th>वडाकार्यालय</th>
+                <th>स्वास्थ्य चौकी</th>
+                <th>अवस्था</th>
+            </tr>
+            <tr>
+                <td>१</td>
+                <td>001</td>
+                <td>12345</td>
+                <td>राम शर्मा</td>
+                <td>अधिकृत</td>
+                <td>तह १०</td>
+                <td>नेपाल सरकार</td>
+                <td>समूह A</td>
+                <td>वित्त</td>
+                <td>उपशाखा १</td>
+                <td>नगर कार्यालय</td>
+                <td>स्वास्थ्य चौकी १</td>
+                <td>सक्रिय</td>
+            </tr>
+            <tr>
+                <td>२</td>
+                <td>002</td>
+                <td>67890</td>
+                <td>सिता बिष्ट</td>
+                <td>लेखा</td>
+                <td>तह १२</td>
+                <td>नेपाल सरकार</td>
+                <td>समूह B</td>
+                <td>शिक्षा</td>
+                <td>उपशाखा २</td>
+                <td>नगर कार्यालय</td>
+                <td>स्वास्थ्य चौकी २</td>
+                <td>निष्क्रिय</td>
+            </tr>
+        </table>
+    </main>
+    <footer>
+        <p>&copy; 2025 कर्मचारी व्यवस्थापन प्रणाली</p>
+    </footer>
+
+    <script>
+        function searchEmployee() {
+            var input, filter, table, tr, td, i, txtValue;
+            var found = false;
+            input = document.getElementById("search-input");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("employee-table");
+            tr = table.getElementsByTagName("tr");
+            var noResult = document.getElementById("no-result");
+            noResult.innerHTML = ''; // Clear previous result message
+            
+            for (i = 1; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                var rowMatch = false;
+                for (var j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            rowMatch = true;
+                        }
+                    }
+                }
+                if (rowMatch) {
+                    tr[i].style.display = "";
+                    tr[i].classList.add("highlight");
+                    found = true;
+                } else {
+                    tr[i].style.display = "none";
+                    tr[i].classList.remove("highlight");
+                }
+            }
+            if (!found) {
+                noResult.innerHTML = "फेला परेन";
+            }
+        }
+    </script>
+
+    <!-- Font Awesome for search icon -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>दरवन्दी रिपोर्ट - खडक नगरपालिका</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kalimati:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body{font-family:'Kalimati', Arial, sans-serif;background:#f5f7fa;color:#222;margin:0;padding:20px}
+        .container{max-width:1000px;margin:20px auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 6px 18px rgba(15,30,50,0.06)}
+        table{width:100%;border-collapse:collapse}
+        th,td{padding:10px;border-bottom:1px solid #eee;text-align:left}
+        th{background:#3498db;color:#fff}
+        .nav{margin-bottom:12px}
+        .nav a{margin-right:8px;text-decoration:none;color:#3498db}
+    </style>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="print.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar-style">
+            <a href="index.html"><i class="fas fa-home"></i>मुख्य पृष्ठ</a>
+            <a href="employees_all.html"><i class="fas fa-list"></i>सबै कर्मचारी</a>
+            <a href="biodata.html"><i class="fas fa-id-card"></i>बायोडाटा</a>
+            <a href="darwandi_form.html"><i class="fas fa-file-alt"></i>दरवन्दी फारम</a>
+        </div>
+
+        <h2>दरवन्दी रिपोर्ट</h2>
+
+        <div style="margin-bottom:12px;">
+            <button onclick="exportCSV()" style="padding:8px 12px;margin-right:8px;background:#27ae60;color:#fff;border:none;border-radius:4px;cursor:pointer;">📥 CSV डाउनलोड</button>
+            <label style="margin-left:20px;"><input type="file" id="csvFile" accept=".csv" /> CSV अपलोड</label>
+            <button onclick="importCSV()" style="padding:8px 12px;margin-left:8px;background:#3498db;color:#fff;border:none;border-radius:4px;cursor:pointer;">📤 इम्पोर्ट</button>
+        </div>
+
+        <div id="report">
+            <table>
+                <thead>
+                    <tr><th>#</th><th>पद</th><th>शाखा</th><th>संख्या</th><th>प्रारम्भ मिति (BS)</th><th>टिप्पणी</th><th>कार्य</th></tr>
+                </thead>
+                <tbody id="rows"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const DB_NAME = 'khadak_municipality_db';
+        function getDB(){return JSON.parse(localStorage.getItem(DB_NAME)||'{}')}
+        function saveDB(db){localStorage.setItem(DB_NAME, JSON.stringify(db))}
+
+        function render(){
+            const db=getDB(); const list=db.darwandi||[]; const tbody=document.getElementById('rows'); tbody.innerHTML='';
+            list.forEach((d,i)=>{
+                const tr=document.createElement('tr');
+                tr.innerHTML = `<td>${i+1}</td><td>${d.title}</td><td>${d.department||'-'}</td><td>${d.count||0}</td><td>${d.startDate||'-'}</td><td>${d.qual||''}</td><td><button onclick="editDarwandi(${d.id})" style="padding:4px 8px;margin-right:4px;background:#f39c12;color:#fff;border:none;border-radius:3px;cursor:pointer;">सम्पादन</button><button onclick="deleteDarwandi(${d.id})" style="padding:4px 8px;background:#e74c3c;color:#fff;border:none;border-radius:3px;cursor:pointer;">हटाउन</button></td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function editDarwandi(id){
+            const db=getDB(); const d=db.darwandi.find(x=>x.id===id);
+            if(!d) return;
+            document.getElementById('title').value=d.title;
+            document.getElementById('department').value=d.department||'';
+            document.getElementById('count').value=d.count||1;
+            document.getElementById('qual').value=d.qual||'';
+            document.getElementById('startDate').value=d.startDateGregorian||'';
+            const form=document.getElementById('darwandiForm');
+            form.onsubmit=function(e){
+                e.preventDefault();
+                d.title=document.getElementById('title').value;
+                d.department=document.getElementById('department').value;
+                d.count=parseInt(document.getElementById('count').value)||0;
+                d.qual=document.getElementById('qual').value;
+                const sd=document.getElementById('startDate').value;
+                d.startDate = sd && window.bsConverter ? bsConverter.gregorianToBs(sd) : sd;
+                d.startDateGregorian=sd||'';
+                saveDB(db);
+                alert('सम्पादन सफलतापूर्वक हुन गयो');
+                form.onsubmit=null;
+                location.reload();
+            };
+            window.scrollTo(0,0);
+        }
+
+        function deleteDarwandi(id){
+            if(!confirm('के तपाईं यो रेकर्ड हटाउन निश्चित हुनुहुन्छ?')) return;
+            const db=getDB();
+            db.darwandi=(db.darwandi||[]).filter(x=>x.id!==id);
+            saveDB(db);
+            render();
+        }
+
+        function exportCSV(){
+            const db=getDB(); const list=db.darwandi||[];
+            let csv='पद,शाखा,संख्या,प्रारम्भ मिति (BS),टिप्पणी\n';
+            list.forEach(d=>{
+                csv+=`"${d.title}","${d.department||''}",${d.count||0},"${d.startDate||''}","${d.qual||''}"\n`;
+            });
+            const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+            const link=document.createElement('a');
+            link.href=URL.createObjectURL(blob);
+            link.download='darwandi_'+new Date().getTime()+'.csv';
+            link.click();
+        }
+
+        function importCSV(){
+            const f=document.getElementById('csvFile').files[0];
+            if(!f) return alert('फाइल छनौट गर्नुहोस्');
+            const reader=new FileReader();
+            reader.onload=function(e){
+                const text=e.target.result;
+                const lines=text.split('\n').slice(1);
+                const db=getDB(); db.darwandi=db.darwandi||[];
+                lines.forEach(line=>{
+                    if(!line.trim()) return;
+                    const parts=line.split('","');
+                    if(parts.length<5) return;
+                    const title=parts[0].replace(/^"/,'');
+                    const dept=parts[1];
+                    const cnt=parseInt(parts[2])||0;
+                    const date=parts[3];
+                    const qual=parts[4].replace(/"$/,'');
+                    const id=db.darwandi.length>0?Math.max(...db.darwandi.map(x=>x.id))+1:1;
+                    db.darwandi.push({id,title,department:dept,count:cnt,startDate:date,startDateGregorian:'',qual,createdAt:new Date().toISOString()});
+                });
+                saveDB(db);
+                alert('इम्पोर्ट सफल');
+                document.getElementById('csvFile').value='';
+                render();
+            };
+            reader.readAsText(f);
+        }
+
+        document.addEventListener('DOMContentLoaded', render);
+    </script>
+</body>
+</html>

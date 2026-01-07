@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>कर्मचारी प्रतिवेदन</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kalimati:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body{font-family:'Kalimati', Arial, sans-serif;background:#f5f7fa;color:#222;margin:0;padding:20px}
+        .card{max-width:900px;margin:20px auto;background:#fff;padding:22px;border-radius:8px;box-shadow:0 6px 18px rgba(15,30,50,0.08)}
+        .header{display:flex;justify-content:space-between;align-items:center}
+        .org{color:#3498db;font-weight:700}
+        .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+        .field{background:#fbfbff;padding:12px;border-radius:6px}
+        .label{font-weight:700;color:#2c3e50;margin-bottom:6px;display:block}
+        .photo{width:160px;height:180px;object-fit:cover;border-radius:6px;border:1px solid #e6e6e6}
+        .actions{margin-top:18px;text-align:right}
+        .btn{padding:10px 14px;border-radius:6px;text-decoration:none;color:#fff;background:#3498db;display:inline-block}
+        @media(max-width:768px){.grid{grid-template-columns:1fr}}
+    </style>
+    <link rel="stylesheet" href="print.css">
+</head>
+<body>
+    <div class="card" id="reportCard">
+        <div class="navbar-style" style="margin-bottom:12px;">
+            <a href="index.html"><i class="fas fa-home"></i>मुख्य पृष्ठ</a>
+            <a href="employees_all.html"><i class="fas fa-list"></i>सबै कर्मचारी</a>
+            <a href="biodata.html"><i class="fas fa-id-card"></i>बायोडाटा</a>
+            <a href="darwandi_form.html"><i class="fas fa-file-alt"></i>दरवन्दी फारम</a>
+        </div>
+
+        <div class="header">
+            <div>
+                <div class="org">खडक नगरपालिका, कर्मचारी प्रतिवेदन</div>
+                <div style="color:#666; font-size:13px; margin-top:6px;">एकल कर्मचारीको बिस्तृत प्रतिवेदन</div>
+            </div>
+            <div>
+                <img id="empPhoto" class="photo" src="https://via.placeholder.com/160x180?text=Photo" alt="Photo">
+            </div>
+        </div>
+
+        <div style="margin-top:8px;">
+            <a href="index.html" style="margin-right:8px;color:#3498db;text-decoration:none;">मुख्य पृष्ठ</a>
+            <a href="employees_all.html" style="margin-right:8px;color:#3498db;text-decoration:none;">सबै कर्मचारी</a>
+            <a href="darwandi_form.html" style="margin-right:8px;color:#3498db;text-decoration:none;">दरवन्दी फारम</a>
+            <a href="darwandi_report.html" style="color:#3498db;text-decoration:none;">दरवन्दी रिपोर्ट</a>
+        </div>
+
+        <h2 id="empName" style="margin-top:14px;color:#2c3e50"></h2>
+        <div style="color:#555" id="empTitle"></div>
+
+        <div class="grid">
+            <div class="field"><span class="label">पूरा नाम</span><div id="fullName">-</div></div>
+            <div class="field"><span class="label">पद/जागिर</span><div id="position">-</div></div>
+
+            <div class="field"><span class="label">कर्मचारी प्रकार</span><div id="employeeType">-</div></div>
+            <div class="field"><span class="label">विभाग/शाखा</span><div id="department">-</div></div>
+
+            <div class="field"><span class="label">सम्पर्क नम्बर</span><div id="phone">-</div></div>
+            <div class="field"><span class="label">इमेल</span><div id="email">-</div></div>
+
+            <div class="field"><span class="label">ठेगाना</span><div id="address">-</div></div>
+            <div class="field"><span class="label">नागरिकता/पहिचान</span><div id="nationalId">-</div></div>
+
+            <div class="field"><span class="label">आपतकालीन सम्पर्क</span><div id="emergencyContact">-</div></div>
+            <div class="field"><span class="label">नियुक्ति मिति</span><div id="joinDate">-</div></div>
+
+            <div class="field"><span class="label">तलब</span><div id="salary">-</div></div>
+            <div class="field"><span class="label">हालको अवस्था</span><div id="status">-</div></div>
+
+            <div class="field" style="grid-column:1 / -1"><span class="label">टिप्पणी / अतिरिक्त विवरण</span><div id="remarks">-</div></div>
+        </div>
+
+        <div class="actions">
+            <a href="#" onclick="window.print();return false;" class="btn"><i class="fas fa-print"></i> प्रिन्ट गर्नुहोस्</a>
+            <a href="employees_all.html" class="btn" style="background:#f39c12; margin-left:8px;"><i class="fas fa-list"></i> सबै कर्मचारी</a>
+            <a href="index.html" class="btn" style="background:#27ae60; margin-left:8px;"><i class="fas fa-home"></i> मुख्य पृष्ठ</a>
+        </div>
+    </div>
+
+    <script>
+        // ensure bs converter available
+        (function(){
+            var s = document.createElement('script'); s.src = 'bs-converter.js'; document.head.appendChild(s);
+        })();
+        const DB_NAME = 'khadak_municipality_db';
+        function getQueryParam(name){const p=new URLSearchParams(window.location.search);return p.get(name)}
+        function getDB(){return JSON.parse(localStorage.getItem(DB_NAME)||'{}')}
+
+        function renderReport(id){
+            const db = getDB();
+            const emp = (db.employees||[]).find(e=>String(e.id)===String(id));
+            if(!emp){document.getElementById('reportCard').innerHTML='<p style="padding:20px">कर्मचारी फेला परेन।</p>';return}
+            document.getElementById('empPhoto').src = emp.photoURL || 'https://via.placeholder.com/160x180?text=Photo';
+            document.getElementById('empName').textContent = emp.fullName || '-';
+            document.getElementById('empTitle').textContent = `${emp.position || '-'} • ${emp.employeeType || '-'}`;
+
+            document.getElementById('fullName').textContent = emp.fullName || '-';
+            document.getElementById('position').textContent = emp.position || '-';
+            document.getElementById('employeeType').textContent = emp.employeeType || '-';
+            document.getElementById('department').textContent = emp.department || '-';
+            document.getElementById('phone').textContent = emp.phone || '-';
+            document.getElementById('email').textContent = emp.email || '-';
+            document.getElementById('address').textContent = emp.address || '-';
+            document.getElementById('nationalId').textContent = emp.nationalId || '-';
+            document.getElementById('emergencyContact').textContent = emp.emergencyContact || '-';
+            function displayDateFor(empDate, greg) {
+                if (!empDate && greg) return (window.bsConverter && bsConverter.gregorianToBs(greg)) || greg;
+                if (empDate && /\d{4}-\d{2}-\d{2}/.test(empDate)) return (window.bsConverter && bsConverter.gregorianToBs(empDate)) || empDate;
+                return empDate;
+            }
+
+            document.getElementById('joinDate').textContent = displayDateFor(emp.joinDate, emp.joinDateGregorian) || '-';
+            document.getElementById('salary').textContent = emp.salary ? 'रु. ' + emp.salary.toLocaleString('ne-NP') : '-';
+            document.getElementById('status').textContent = emp.status || '-';
+            document.getElementById('remarks').innerHTML = (emp.remarks || '') + (emp.extraInfo ? '<br/>' + emp.extraInfo : '');
+            // Documents
+            const docsHTML = [];
+            function makeDocRow(label, date, url) {
+                if (!date && !url) return '';
+                const isImage = url && /data:image|\.(png|jpe?g|gif)$/i.test(url);
+                const isPDF = url && /\.(pdf)$/i.test(url);
+                const viewBtn = url ? `<a href="${url}" target="_blank" style="margin-left:8px;">हेर्नुहोस्</a>` : '';
+                const dlBtn = url ? `<a href="${url}" download style="margin-left:6px;">डाउनलोड</a>` : '';
+                const preview = isImage ? `<div style="margin-top:6px;"><img src="${url}" style="max-width:160px;border:1px solid #eee;border-radius:6px;"/></div>` : (isPDF ? `<div style="margin-top:6px;"><a href="${url}" target="_blank">PDF खोल्नुहोस्</a></div>` : '');
+                return `<div><strong>${label}:</strong> ${date || '-'} ${viewBtn} ${dlBtn} ${preview}</div>`;
+            }
+
+            docsHTML.push(makeDocRow('नियुक्ति', emp.appointmentDocDate, emp.appointmentDoc));
+            docsHTML.push(makeDocRow('समायोजन', emp.adjustmentDate, emp.adjustmentDoc));
+            docsHTML.push(makeDocRow('बढुवा', emp.promotionDate, emp.promotionDoc));
+            docsHTML.push(makeDocRow('काज/समायोजन', emp.deputationDate, emp.deputationDoc));
+
+            const docsFiltered = docsHTML.filter(Boolean);
+            if (docsFiltered.length) {
+                const container = document.createElement('div');
+                container.style.marginTop = '12px';
+                container.innerHTML = docsFiltered.join('');
+                document.getElementById('remarks').parentNode.appendChild(container);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', ()=>{
+            const id = getQueryParam('id');
+            if(id){ renderReport(id); }
+            else {
+                // show latest employee if no id provided
+                const db=getDB();
+                const list=db.employees||[];
+                if(list.length>0) renderReport(list[list.length-1].id);
+                else document.getElementById('reportCard').innerHTML='<p style="padding:20px">कुनै कर्मचारी उपलब्ध छैन।</p>';
+            }
+        });
+    </script>
+</body>
+</html>

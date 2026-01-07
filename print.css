@@ -1,0 +1,9 @@
+@media print {
+    body { margin: 0; padding: 0; }
+    .navbar, .nav, .search, .actions { display: none !important; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #333; padding: 8px; text-align: left; }
+    th { background-color: #f0f0f0; }
+    .photo { max-width: 100px; }
+    h2, h3 { page-break-after: avoid; }
+}

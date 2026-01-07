@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>सिफारिस</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">कर्मचारी व्यवस्थापन प्रणाली</h1>
+            <nav class="site-nav" role="navigation">
+                <ul>
+                    <li><a href="../index.php">गृहपृष्ठ</a></li>
+                    <li><a href="../employ_list.php">कर्मचारी सूची</a></li>
+                    <li><a href="../post_employee.php">कर्मचारी विवरण</a></li>
+                    <li><a href="../recommendation.php">सिफारिस</a></li>
+                    <li><a href="../transfer.php">सरुवा</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container" style="max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 10px;">
+        <h1>सिफारिस दर्ता</h1>
+        <form method="POST">
+            <div style="margin-bottom: 15px;">
+                <label for="employee_no"><strong>क.सं.नं.:</strong></label>
+                <input type="text" id="employee_no" name="employee_no" placeholder="कर्मचारी नम्बर" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="employee_name"><strong>कर्मचारी नाम:</strong></label>
+                <input type="text" id="employee_name" name="employee_name" placeholder="नाम" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="recommendation_org"><strong>सिफारिस गर्ने निकाय:</strong></label>
+                <select id="recommendation_org" name="recommendation_org" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+                    <option value="">छनोट गर्नुहोस्</option>
+                    <option value="संघीय लोकसेवा आयोग">संघीय लोकसेवा आयोग</option>
+                    <option value="प्रदेश लोकसेवा आयोग">प्रदेश लोकसेवा आयोग</option>
+                    <option value="स्थानीय तह">स्थानीय तह</option>
+                </select>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="recommendation_date"><strong>सिफारिस मिति:</strong></label>
+                <input type="date" id="recommendation_date" name="recommendation_date" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="remarks"><strong>टिप्पणी:</strong></label>
+                <textarea id="remarks" name="remarks" rows="3" placeholder="अतिरिक्त जानकारी" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;"></textarea>
+            </div>
+            <button type="submit" class="btn primary" style="width: 100%;">दर्ता गर्नुहोस्</button>
+        </form>
+    </div>
+</body>
+</html>

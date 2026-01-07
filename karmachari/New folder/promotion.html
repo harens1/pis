@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>बढुवा</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">कर्मचारी व्यवस्थापन प्रणाली</h1>
+            <nav class="site-nav" role="navigation">
+                <ul>
+                    <li><a href="../index.php">गृहपृष्ठ</a></li>
+                    <li><a href="../employ_list.php">कर्मचारी सूची</a></li>
+                    <li><a href="../post_employee.php">कर्मचारी विवरण</a></li>
+                    <li><a href="../recommendation.php">सिफारिस</a></li>
+                    <li><a href="../transfer.php">सरुवा</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container" style="max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 10px;">
+        <h1>बढुवा दर्ता</h1>
+        <form method="POST">
+            <div style="margin-bottom: 15px;">
+                <label for="employee_no"><strong>क.सं.नं.:</strong></label>
+                <input type="text" id="employee_no" name="employee_no" placeholder="कर्मचारी नम्बर" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="employee_name"><strong>कर्मचारी नाम:</strong></label>
+                <input type="text" id="employee_name" name="employee_name" placeholder="नाम" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="current_level"><strong>वर्तमान तह:</strong></label>
+                <select id="current_level" name="current_level" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+                    <option value="">छनोट गर्नुहोस्</option>
+                    <option value="5">५</option>
+                    <option value="6">६</option>
+                    <option value="7">७</option>
+                    <option value="8">८</option>
+                </select>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="new_level"><strong>नयाँ तह:</strong></label>
+                <select id="new_level" name="new_level" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+                    <option value="">छनोट गर्नुहोस्</option>
+                    <option value="6">६</option>
+                    <option value="7">७</option>
+                    <option value="8">८</option>
+                    <option value="9">९</option>
+                </select>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="promotion_date"><strong>बढुवा मिति:</strong></label>
+                <input type="date" id="promotion_date" name="promotion_date" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="remarks"><strong>टिप्पणी:</strong></label>
+                <textarea id="remarks" name="remarks" rows="4" placeholder="अतिरिक्त टिप्पणी" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;"></textarea>
+            </div>
+            <button type="submit" class="btn primary" style="width: 100%;">दर्ता गर्नुहोस्</button>
+        </form>
+    </div>
+</body>
+</html>

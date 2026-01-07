@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>दरवन्दी विस्तृत प्रतिवेदन - खडक नगरपालिका</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="print.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Kalimati', 'Arial Unicode MS', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin: 30px 0 20px;
+            color: #2c3e50;
+        }
+
+        .page-title h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .search-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .search-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .search-row input,
+        .search-row select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'Kalimati', Arial;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'Kalimati', Arial;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+        }
+
+        .btn-info {
+            background: #1abc9c;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #16a085;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .data-table thead {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+        }
+
+        .data-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .data-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .data-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .data-table tbody tr:nth-child(even) {
+            background: #fafbfc;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .action-buttons button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Kalimati', Arial;
+        }
+
+        .btn-edit {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #e67e22;
+        }
+
+        .btn-view {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: #2980b9;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c0392b;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: #000;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .detail-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #7f8c8d;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        @media print {
+            .search-section,
+            .button-group,
+            .navbar {
+                display: none !important;
+            }
+
+            .table-container {
+                box-shadow: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-row {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .data-table {
+                font-size: 11px;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 8px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="bs-converter.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar-style">
+        <a href="index.html" title="गृह पृष्ठ">
+            <i class="fas fa-home"></i> गृह
+        </a>
+        <a href="darwandi_form.html" title="दरवन्दी फाराम">
+            <i class="fas fa-file-alt"></i> नयाँ दरवन्दी
+        </a>
+        <a href="darwandi_detailed_report.html" title="विस्तृत दरवन्दी रिपोर्ट" class="active">
+            <i class="fas fa-file-pdf"></i> विस्तृत रिपोर्ट
+        </a>
+        <a href="darwandi_report.html" title="दरवन्दी रिपोर्ट">
+            <i class="fas fa-file-contract"></i> दरवन्दी रिपोर्ट
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="page-title">
+            <h1><i class="fas fa-file-pdf"></i> दरवन्दी विस्तृत प्रतिवेदन</h1>
+            <p>सबै खाली दरवन्दी पदहरुको विस्तृत विवरण</p>
+        </div>
+
+        <!-- Search and Filter Section -->
+        <div class="search-section">
+            <div class="search-row">
+                <input type="text" id="searchInput" placeholder="पद, विभाग खोज्नुहोस्..." onkeyup="filterDarwandi()">
+                <select id="departmentFilter" onchange="filterDarwandi()">
+                    <option value="">सबै विभाग</option>
+                </select>
+                <select id="levelFilter" onchange="filterDarwandi()">
+                    <option value="">सबै तह</option>
+                    <option value="प्र.क">प्र.क</option>
+                    <option value="उ.क">उ.क</option>
+                    <option value="म.क">म.क</option>
+                </select>
+            </div>
+            <div class="button-group">
+                <button onclick="printTable()" class="btn btn-info">
+                    <i class="fas fa-print"></i> मुद्रण गर्नुहोस्
+                </button>
+                <button onclick="exportToCSV()" class="btn btn-success">
+                    <i class="fas fa-download"></i> CSV डाउनलोड
+                </button>
+                <button onclick="location.reload()" class="btn btn-primary">
+                    <i class="fas fa-sync"></i> ताजा गर्नुहोस्
+                </button>
+            </div>
+        </div>
+
+        <!-- Darwandi Table -->
+        <div class="table-container">
+            <table class="data-table" id="darwandiTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>क्र.सं.</th>
+                        <th>पदको नाम</th>
+                        <th>तह</th>
+                        <th>समूह</th>
+                        <th>विभाग</th>
+                        <th>स्वीकृत</th>
+                        <th>रिक्त</th>
+                        <th>पदपूर्ति</th>
+                        <th>प्रकार</th>
+                        <th>कार्य</th>
+                    </tr>
+                </thead>
+                <tbody id="darwandiList">
+                    <tr>
+                        <td colspan="11" class="no-data">
+                            <i class="fas fa-inbox"></i> कुनै दरवन्दी दर्ता गरिएको छैन
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">दरवन्दी विवरण</h2>
+            <div id="detailContent" style="margin-top: 20px;"></div>
+            <div style="margin-top: 20px; text-align: center;">
+                <button onclick="closeModal()" class="btn btn-primary">बन्द गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Database functions
+        function getDatabase() {
+            const stored = localStorage.getItem('pisDatabase');
+            if (stored) {
+                return JSON.parse(stored);
+            }
+            return { employees: [], darwandi: [], users: [], systemLogs: [] };
+        }
+
+        function saveDatabase(db) {
+            localStorage.setItem('pisDatabase', JSON.stringify(db));
+        }
+
+        // Load darwandi into table
+        function loadDarwandi() {
+            const db = getDatabase();
+            const tbody = document.getElementById('darwandiList');
+
+            if (db.darwandi.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="11" class="no-data"><i class="fas fa-inbox"></i> कुनै दरवन्दी दर्ता गरिएको छैन</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = db.darwandi.map((darw, index) => `
+                <tr>
+                    <td><strong>${darw.id}</strong></td>
+                    <td>${darw.serialNumber}</td>
+                    <td>${darw.positionName}</td>
+                    <td>${darw.level}</td>
+                    <td>${darw.group}</td>
+                    <td>${darw.department}</td>
+                    <td>${darw.approvedCount}</td>
+                    <td>${darw.vacantCount}</td>
+                    <td>${darw.filledCount}</td>
+                    <td>${darw.creationType}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button onclick="viewDarwandi(${index})" class="btn-view">
+                                <i class="fas fa-eye"></i> हेर्नुहोस्
+                            </button>
+                            <button onclick="deleteDarwandi(${index})" class="btn-delete">
+                                <i class="fas fa-trash"></i> मेटाउनुहोस्
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Load department filter options
+            const departments = [...new Set(db.darwandi.map(d => d.department).filter(Boolean))];
+            const deptSelect = document.getElementById('departmentFilter');
+            const currentValue = deptSelect.value;
+            deptSelect.innerHTML = '<option value="">सबै विभाग</option>' +
+                departments.map(d => `<option value="${d}">${d}</option>`).join('');
+            deptSelect.value = currentValue;
+        }
+
+        // View darwandi details
+        function viewDarwandi(index) {
+            const db = getDatabase();
+            const darw = db.darwandi[index];
+
+            if (!darw) return;
+
+            const modal = document.getElementById('detailModal');
+            document.getElementById('modalTitle').textContent = `${darw.positionName} - विस्तृत विवरण`;
+
+            const details = `
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">ID</div>
+                        <div class="detail-value">${darw.id}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">क्र.सं.</div>
+                        <div class="detail-value">${darw.serialNumber}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">पदको नाम</div>
+                        <div class="detail-value">${darw.positionName}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">तह</div>
+                        <div class="detail-value">${darw.level}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">सेवा</div>
+                        <div class="detail-value">${darw.service}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">समूह</div>
+                        <div class="detail-value">${darw.group}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">उपसमूह</div>
+                        <div class="detail-value">${darw.subgroup}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">विभाग</div>
+                        <div class="detail-value">${darw.department}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">स्वीकृत दरवन्दी</div>
+                        <div class="detail-value">${darw.approvedCount}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">रिक्त दरवन्दी</div>
+                        <div class="detail-value">${darw.vacantCount}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">पदपूर्ति भएको</div>
+                        <div class="detail-value">${darw.filledCount}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">दरवन्दी श्रृजनाको प्रकार</div>
+                        <div class="detail-value">${darw.creationType}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">करारमा कार्यरत</div>
+                        <div class="detail-value">${darw.contractCount}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">दैज्यामा कार्यरत</div>
+                        <div class="detail-value">${darw.daijyaCount}</div>
+                    </div>
+                    <div class="detail-item" style="grid-column: 1/-1;">
+                        <div class="detail-label">कैफियत</div>
+                        <div class="detail-value">${darw.remarks || '-'}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">दरवन्दी मिति</div>
+                        <div class="detail-value">${darw.startDate || '-'}</div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('detailContent').innerHTML = details;
+            modal.classList.add('active');
+        }
+
+        // Delete darwandi
+        function deleteDarwandi(index) {
+            const db = getDatabase();
+            const darw = db.darwandi[index];
+
+            if (confirm(`के तपाईं "${darw.positionName}" दरवन्दी मेटाउन निश्चित हुनुहुन्छ?`)) {
+                db.darwandi.splice(index, 1);
+                saveDatabase(db);
+                loadDarwandi();
+                alert('दरवन्दी मेटाइयो।');
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('detailModal').classList.remove('active');
+        }
+
+        // Filter darwandi
+        function filterDarwandi() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const deptFilter = document.getElementById('departmentFilter').value;
+            const levelFilter = document.getElementById('levelFilter').value;
+            const db = getDatabase();
+
+            const filtered = db.darwandi.filter(darw =>
+                (darw.positionName.toLowerCase().includes(searchTerm) ||
+                 darw.department?.toLowerCase().includes(searchTerm)) &&
+                (deptFilter === '' || darw.department === deptFilter) &&
+                (levelFilter === '' || darw.level === levelFilter)
+            );
+
+            const tbody = document.getElementById('darwandiList');
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="11" class="no-data">कोनै परिणाम भेटिएन</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map((darw, index) => {
+                const actualIndex = db.darwandi.indexOf(darw);
+                return `
+                <tr>
+                    <td><strong>${darw.id}</strong></td>
+                    <td>${darw.serialNumber}</td>
+                    <td>${darw.positionName}</td>
+                    <td>${darw.level}</td>
+                    <td>${darw.group}</td>
+                    <td>${darw.department}</td>
+                    <td>${darw.approvedCount}</td>
+                    <td>${darw.vacantCount}</td>
+                    <td>${darw.filledCount}</td>
+                    <td>${darw.creationType}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button onclick="viewDarwandi(${actualIndex})" class="btn-view">
+                                <i class="fas fa-eye"></i> हेर्नुहोस्
+                            </button>
+                            <button onclick="deleteDarwandi(${actualIndex})" class="btn-delete">
+                                <i class="fas fa-trash"></i> मेटाउनुहोस्
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            }).join('');
+        }
+
+        // Print table
+        function printTable() {
+            window.print();
+        }
+
+        // Export to CSV
+        function exportToCSV() {
+            const db = getDatabase();
+            if (db.darwandi.length === 0) {
+                alert('कुनै दरवन्दी डाटा नछ।');
+                return;
+            }
+
+            const headers = ['ID', 'क्र.सं.', 'पदको नाम', 'तह', 'समूह', 'उपसमूह', 'विभाग', 'स्वीकृत', 'रिक्त', 'पदपूर्ति', 'प्रकार', 'कैफियत'];
+            const rows = db.darwandi.map(darw => [
+                darw.id,
+                darw.serialNumber,
+                darw.positionName,
+                darw.level,
+                darw.group,
+                darw.subgroup,
+                darw.department,
+                darw.approvedCount,
+                darw.vacantCount,
+                darw.filledCount,
+                darw.creationType,
+                darw.remarks
+            ]);
+
+            let csv = headers.join(',') + '\n';
+            rows.forEach(row => {
+                csv += row.map(cell => `"${cell}"`).join(',') + '\n';
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'दरवन्दी_विवरण_' + new Date().toLocaleDateString('ne-NP') + '.csv';
+            link.click();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDarwandi();
+        });
+    </script>
+</body>
+</html>

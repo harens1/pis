@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>दरवन्दी विवरण फाराम - खडक नगरपालिका</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="navbar.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Kalimati', 'Arial Unicode MS', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #3498db;
+        }
+
+        .page-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .page-header p {
+            color: #7f8c8d;
+        }
+
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 18px;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Kalimati', Arial;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'Kalimati', Arial;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .info-box i {
+            color: #3498db;
+            margin-right: 8px;
+        }
+
+        .helper-text {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        .form-group .info-label {
+            display: inline-block;
+            background: #e8f4f8;
+            color: #0c5460;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .success-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+    <script src="bs-converter.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar-style">
+        <a href="index.html" title="गृह पृष्ठ">
+            <i class="fas fa-home"></i> गृह
+        </a>
+        <a href="employee_management.html" title="कर्मचारी व्यवस्थापन">
+            <i class="fas fa-users-cog"></i> व्यवस्थापन
+        </a>
+        <a href="darwandi_form.html" title="दरवन्दी फाराम" class="active">
+            <i class="fas fa-file-alt"></i> दरवन्दी फाराम
+        </a>
+        <a href="darwandi_detailed_report.html" title="विस्तृत दरवन्दी रिपोर्ट">
+            <i class="fas fa-file-pdf"></i> विस्तृत रिपोर्ट
+        </a>
+        <a href="darwandi_report.html" title="दरवन्दी रिपोर्ट">
+            <i class="fas fa-file-contract"></i> दरवन्दी रिपोर्ट
+        </a>
+    </div>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-file-alt"></i> दरवन्दी विवरण फाराम</h1>
+            <p>खाली दरवन्दी पद सम्बन्धी विस्तृत जानकारी दर्ज गर्नुहोस्</p>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-container">
+            <div class="section-title">
+                <i class="fas fa-keyboard"></i> दरवन्दी जानकारी
+            </div>
+
+            <div class="info-box">
+                <i class="fas fa-info-circle"></i>
+                कृपया दरवन्दी पद सम्बन्धी सम्पूर्ण जानकारी भर्नुहोस्। तारा (*) भएका फिल्ड अनिवार्य छन्।
+            </div>
+
+            <form id="darwandiForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>क्र.सं. <span class="required">*</span></label>
+                        <input type="number" id="serialNumber" class="form-control" placeholder="१, २, ३..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>पदको नाम <span class="required">*</span></label>
+                        <input type="text" id="positionName" class="form-control" placeholder="शिक्षक, कर्मचारी..." required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>तह (Level)</label>
+                        <select id="level" class="form-control">
+                            <option value="">चयन गर्नुहोस्</option>
+                            <option value="प्र.क">प्र.क (Principal)</option>
+                            <option value="उ.क">उ.क (Senior)</option>
+                            <option value="म.क">म.क (Junior)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>सेवा</label>
+                        <input type="text" id="service" class="form-control" placeholder="नियमित, निर्धारित...">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>समूह</label>
+                        <select id="group" class="form-control">
+                            <option value="">चयन गर्नुहोस्</option>
+                            <option value="क">क समूह</option>
+                            <option value="ख">ख समूह</option>
+                            <option value="ग">ग समूह</option>
+                            <option value="घ">घ समूह</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>उपसमूह</label>
+                        <input type="text" id="subgroup" class="form-control" placeholder="१, २, ३...">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>स्वीकृत दरवन्दी संख्या <span class="required">*</span></label>
+                        <input type="number" id="approvedCount" class="form-control" min="1" placeholder="०" onchange="calculateVacant()" required>
+                        <div class="helper-text">कुल दरवन्दी संख्या जुन नगरपालिकाले स्वीकृति दिएको छ।</div>
+                    </div>
+                    <div class="form-group">
+                        <label>रिक्त दरवन्दी संख्या <span class="required">*</span></label>
+                        <input type="number" id="vacantCount" class="form-control" min="0" placeholder="०" readonly style="background: #f0f3f4;">
+                        <div class="helper-text"><strong>स्वचालित रूपान्तरण:</strong> स्वीकृत - पदपूर्ति = रिक्त</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>पदपूर्ति भएको संख्या</label>
+                        <input type="number" id="filledCount" class="form-control" min="0" placeholder="०" onchange="calculateVacant()">
+                        <div class="helper-text">यस समय कति दरवन्दीमा कर्मचारी नियुक्त गरिएको छ।</div>
+                    </div>
+                    <div class="form-group">
+                        <label>दरवन्दी श्रृजनाको प्रकार</label>
+                        <select id="creationType" class="form-control">
+                            <option value="">चयन गर्नुहोस्</option>
+                            <option value="नयाँ">नयाँ दरवन्दी</option>
+                            <option value="प्रतिस्थापन">प्रतिस्थापन</option>
+                            <option value="बृद्धि">बृद्धि</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>करारमा कार्यरत संख्या</label>
+                        <input type="number" id="contractCount" class="form-control" min="0" placeholder="०">
+                        <div class="info-label">📄 करार अनुबन्ध</div>
+                        <div class="helper-text">निर्धारित अवधिको लागि करार आधारमा कार्यरत कर्मचारीको संख्या। यो दरवन्दीको अंग नहोय पनि हुन सक्छ।</div>
+                    </div>
+                    <div class="form-group">
+                        <label>दैज्यामा कार्यरत संख्या</label>
+                        <input type="number" id="daijyaCount" class="form-control" min="0" placeholder="०">
+                        <div class="info-label">🔄 दैज्या व्यवस्था</div>
+                        <div class="helper-text">अन्य स्थान वा सेवाबाट अस्थायी रूपमा नियुक्त कर्मचारीको संख्या। यो दरवन्दीको अंग नहोय पनि हुन सक्छ।</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: 1/-1;">
+                        <label>कैफियत (विस्तृत टिप्पणी)</label>
+                        <textarea id="remarks" class="form-control" placeholder="अतिरिक्त जानकारी, विशेष नोट, आदि"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>शाखा / विभाग</label>
+                        <input type="text" id="department" class="form-control" placeholder="शाखा/विभागको नाम">
+                    </div>
+                    <div class="form-group">
+                        <label>दरवन्दी सृजनाको मिति (Gregorian)</label>
+                        <input type="date" id="startDate" class="form-control">
+                        <small style="color: #7f8c8d;">BS मा स्वचालितः रूपान्तरित हुनेछ</small>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                        <i class="fas fa-redo"></i> रिसेट गर्नुहोस्
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> दरवन्दी दर्ता गर्नुहोस्
+                    </button>
+                </div>
+
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i> दरवन्दी सफलतापूर्वक दर्ता गरिएको छ!
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Database functions
+        function getDatabase() {
+            const stored = localStorage.getItem('pisDatabase');
+            if (stored) {
+                return JSON.parse(stored);
+            }
+            return { employees: [], darwandi: [], users: [], systemLogs: [] };
+        }
+
+        function saveDatabase(db) {
+            localStorage.setItem('pisDatabase', JSON.stringify(db));
+        }
+
+        // Form submission
+        document.getElementById('darwandiForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const db = getDatabase();
+            
+            const convertToBS = (date) => {
+                if (!date) return '';
+                const converted = bsConverter.gregorianToBs(date);
+                return converted || date;
+            };
+
+            const newDarwandi = {
+                id: 'DW' + String(db.darwandi.length + 1).padStart(4, '0'),
+                serialNumber: document.getElementById('serialNumber').value,
+                positionName: document.getElementById('positionName').value,
+                level: document.getElementById('level').value || '-',
+                service: document.getElementById('service').value || '-',
+                group: document.getElementById('group').value || '-',
+                subgroup: document.getElementById('subgroup').value || '-',
+                approvedCount: parseInt(document.getElementById('approvedCount').value || 0),
+                vacantCount: parseInt(document.getElementById('vacantCount').value || 0),
+                filledCount: parseInt(document.getElementById('filledCount').value || 0),
+                creationType: document.getElementById('creationType').value || '-',
+                contractCount: parseInt(document.getElementById('contractCount').value || 0),
+                daijyaCount: parseInt(document.getElementById('daijyaCount').value || 0),
+                remarks: document.getElementById('remarks').value || '',
+                department: document.getElementById('department').value || '',
+                startDate: convertToBS(document.getElementById('startDate').value),
+                startDateGregorian: document.getElementById('startDate').value || '',
+                createdAt: new Date().toISOString()
+            };
+
+            db.darwandi.push(newDarwandi);
+            saveDatabase(db);
+
+            // Show success message
+            document.getElementById('successMessage').classList.add('show');
+            
+            // Reset form
+            resetForm();
+
+            // Redirect after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'darwandi_detailed_report.html';
+            }, 2000);
+        });
+
+        // Reset form
+        function resetForm() {
+            document.getElementById('darwandiForm').reset();
+            document.getElementById('successMessage').classList.remove('show');
+            document.getElementById('vacantCount').value = '0';
+        }
+
+        // Calculate vacant count
+        function calculateVacant() {
+            const approved = parseInt(document.getElementById('approvedCount').value) || 0;
+            const filled = parseInt(document.getElementById('filledCount').value) || 0;
+            const vacant = approved - filled;
+            document.getElementById('vacantCount').value = Math.max(0, vacant);
+        }
+    </script>
+</body>
+</html>

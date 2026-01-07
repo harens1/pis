@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e6f7ff;  /* हल्का निलो पृष्ठभूमि */
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+header {
+    background-color: #4682b4;
+    color: white;
+    padding: 20px;
+    font-size: 30px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 15px 0;
+    font-size: 14px;
+    border: 1px solid #4682b4;
+    border-radius: 5px;
+    background-color: #f0f8ff;  /* हल्का निलो पृष्ठभूमि */
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #4682b4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #87ceeb;
+}
+
+/* सबमिट बटनमा आइकन थप्ने */
+button::before {
+    content: "✔️ "; /* चेक आइकन */
+}
+
+button:disabled {
+    background-color: #b0c4de;
+    cursor: not-allowed;
+}
+
+/* सुधारिएको input र select styles */
+input, select {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+/* सुन्दर डिवाइसको लागि डिजाइन सुधार */
+@media (max-width: 768px) {
+    form {
+        width: 95%;
+    }
+
+    header {
+        font-size: 24px;
+    }
+}

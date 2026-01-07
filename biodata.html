@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कर्मचारी पूर्ण बायोडाटा - खडक नगरपालिका</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kalimati:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Kalimati', 'Mangal', Arial, sans-serif; background:#f5f5f5; color:#333; margin:0; }
+        .container { max-width:1000px; margin:30px auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.08); }
+        .back { margin-bottom:15px; }
+        .section-title { color:#2c3e50; border-bottom:2px solid #3498db; padding-bottom:10px; margin-bottom:15px; font-size:20px; }
+        .grid { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+        .field { background:#fbfbfb; padding:12px; border-radius:6px; }
+        .label { font-weight:bold; color:#2c3e50; margin-bottom:6px; display:block; }
+        .footer { text-align:center; margin-top:20px; color:#777; font-size:13px; }
+        @media (max-width:768px){ .grid{grid-template-columns:1fr;} }
+    </style>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="print.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar-style">
+            <a href="index.html"><i class="fas fa-home"></i>मुख्य पृष्ठ</a>
+            <a href="employees_all.html"><i class="fas fa-list"></i>सबै कर्मचारी</a>
+            <a href="darwandi_form.html"><i class="fas fa-file-alt"></i>दरवन्दी फारम</a>
+            <a href="darwandi_report.html"><i class="fas fa-file-contract"></i>दरवन्दी रिपोर्ट</a>
+        </div>
+
+        <h2 class="section-title">कर्मचारीको पूर्ण बायोडाटा</h2>
+
+        <p>यहाँ कर्मचारीको पूर्ण व्यक्तिगत तथा कार्यालय सम्बन्धी विवरण राख्न सकिन्छ। तलको ढाँचालाई कपी गरी आवश्यक विवरण भर्नुहोस्।</p>
+
+        <div id="employeeSelector" style="margin-bottom:12px;">
+            <label for="employeeList" class="label">कर्मचारी छान्नुहोस्</label>
+            <select id="employeeList" class="form-control" style="padding:8px; border-radius:6px;">
+                <option value="">-- कुनै कर्मचारी छान्नुहोस् --</option>
+            </select>
+        </div>
+
+        <div id="biodataCard" style="display:none; margin-top:12px;">
+            <div style="display:flex; gap:16px; align-items:flex-start;">
+                <div style="width:160px; text-align:center;">
+                    <img id="photo" src="https://via.placeholder.com/140x160?text=Photo" alt="Photo" style="width:140px; height:160px; object-fit:cover; border-radius:6px; border:1px solid #e6e6e6;">
+                    <div style="margin-top:8px; color:#7f8c8d; font-size:13px;">कर्मचारी फोटो</div>
+                </div>
+                <div style="flex:1;">
+                    <h3 id="bpName" style="margin:0 0 8px 0; color:#2c3e50;"></h3>
+                    <div style="color:#555; margin-bottom:12px;">पद: <strong id="bpPosition"></strong> • प्रकार: <strong id="bpType"></strong></div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                        <div class="field"><span class="label">सम्पर्क नम्बर</span><div id="phone">—</div></div>
+                        <div class="field"><span class="label">इमेल</span><div id="email">—</div></div>
+                        <div class="field"><span class="label">ठेगाना</span><div id="address">—</div></div>
+                        <div class="field"><span class="label">विभाग</span><div id="department">—</div></div>
+                        <div class="field"><span class="label">नियुक्ति मिति</span><div id="joinDate">—</div></div>
+                        <div class="field"><span class="label">तलब</span><div id="salary">—</div></div>
+                        <div class="field" style="grid-column:1 / -1;"><span class="label">स्थिति / टिप्पणी</span><div id="status">—</div><div id="remarks" style="margin-top:8px; color:#444;"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="section-title" style="margin-top:20px;">कार्यालयको व्यक्तिगत विवरण</h3>
+        <div class="grid">
+            <div class="field">
+                <span class="label">कार्यलय फोन / विस्तार</span>
+                <div id="officePhone">—</div>
+            </div>
+            <div class="field">
+                <span class="label">कार्यालय इमेल</span>
+                <div id="officeEmail">—</div>
+            </div>
+
+            <div class="field" style="grid-column:1 / -1;">
+                <span class="label">ला-कार्यालय नोट / अतिरिक्त जानकारी</span>
+                <div id="officeNotes">यहाँ कार्यालय सम्बन्धी अतिरिक्त जानकारी उल्लेख गर्न सकिन्छ।</div>
+            </div>
+        </div>
+
+            <div style="text-align:right; margin-top:18px;">
+                <a href="index.html" style="text-decoration:none; color:#fff; background:#27ae60; padding:10px 14px; border-radius:6px;">मुखपृष्ठमा फर्कनुहोस्</a>
+            </div>
+
+        </div>
+
+        <script src="bs-converter.js"></script>
+        <script>
+            const DB_NAME = 'khadak_municipality_db';
+
+            function getQueryParam(name) {
+                const params = new URLSearchParams(window.location.search);
+                return params.get(name);
+            }
+
+            function getDatabase() {
+                return JSON.parse(localStorage.getItem(DB_NAME) || '{}');
+            }
+
+            function populateSelector() {
+                const db = getDatabase();
+                const employees = (db.employees || []).slice().reverse();
+                const sel = document.getElementById('employeeList');
+                employees.forEach(emp => {
+                    const opt = document.createElement('option');
+                    opt.value = emp.id;
+                    opt.textContent = `${emp.fullName} — ${emp.position}`;
+                    sel.appendChild(opt);
+                });
+            }
+
+            function renderEmployee(id) {
+                const db = getDatabase();
+                const emp = (db.employees || []).find(e => String(e.id) === String(id));
+                if (!emp) { document.getElementById('biodataCard').style.display='none'; return; }
+
+                document.getElementById('biodataCard').style.display = 'block';
+                document.getElementById('bpName').textContent = emp.fullName || '-';
+                document.getElementById('bpPosition').textContent = emp.position || '-';
+                document.getElementById('bpType').textContent = emp.employeeType || '-';
+                document.getElementById('phone').textContent = emp.phone || '-';
+                document.getElementById('email').textContent = emp.email || '-';
+                document.getElementById('address').textContent = emp.address || '-';
+                document.getElementById('department').textContent = emp.department || '-';
+                function displayDateFor(empDate, greg) {
+                    if (!empDate && greg) return bsConverter.gregorianToBs(greg) || greg;
+                    if (empDate && /\d{4}-\d{2}-\d{2}/.test(empDate)) return bsConverter.gregorianToBs(empDate) || empDate;
+                    return empDate;
+                }
+
+                document.getElementById('joinDate').textContent = displayDateFor(emp.joinDate, emp.joinDateGregorian) || '-';
+                document.getElementById('salary').textContent = emp.salary ? 'रु. ' + emp.salary.toLocaleString('ne-NP') : '-';
+                document.getElementById('status').textContent = emp.status || '-';
+                document.getElementById('remarks').textContent = emp.remarks || '';
+                // if photo URL exists in remarks or another field, could set photo src
+
+                // Attach documents preview / links if present
+                (function(){
+                    const docs = [];
+                    function mk(label, date, url){
+                        if(!date && !url) return '';
+                        const isImage = url && /data:image|\.(png|jpe?g|gif)$/i.test(url);
+                        const isPDF = url && /\.(pdf)$/i.test(url);
+                        const view = url ? `<a href="${url}" target="_blank" style="margin-left:8px;">हेर्नुहोस्</a>` : '';
+                        const dl = url ? `<a href="${url}" download style="margin-left:6px;">डाउनलोड</a>` : '';
+                        const prev = isImage ? `<div style="margin-top:6px;"><img src="${url}" style="max-width:140px;border:1px solid #eee;border-radius:6px;"/></div>` : (isPDF ? `<div style="margin-top:6px;"><a href="${url}" target="_blank">PDF खोल्नुहोस्</a></div>` : '');
+                        return `<div><strong>${label}:</strong> ${date || '-'} ${view} ${dl} ${prev}</div>`;
+                    }
+
+                    docs.push(mk('नियुक्ति', emp.appointmentDocDate, emp.appointmentDoc));
+                    docs.push(mk('समायोजन', emp.adjustmentDate, emp.adjustmentDoc));
+                    docs.push(mk('बढुवा', emp.promotionDate, emp.promotionDoc));
+                    docs.push(mk('काज/समायोजन', emp.deputationDate, emp.deputationDoc));
+
+                    const filtered = docs.filter(Boolean);
+                    if (filtered.length) {
+                        const container = document.createElement('div');
+                        container.style.marginTop = '10px';
+                        container.innerHTML = filtered.join('');
+                        document.getElementById('remarks').parentNode.appendChild(container);
+                    }
+                })();
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                populateSelector();
+                const sel = document.getElementById('employeeList');
+                const idParam = getQueryParam('id');
+                if (idParam) {
+                    sel.value = idParam;
+                    renderEmployee(idParam);
+                }
+
+                sel.addEventListener('change', () => {
+                    const val = sel.value;
+                    if (val) {
+                        renderEmployee(val);
+                        // update URL without reloading
+                        const u = new URL(window.location);
+                        u.searchParams.set('id', val);
+                        window.history.replaceState({}, '', u);
+                    } else {
+                        document.getElementById('biodataCard').style.display='none';
+                    }
+                });
+            });
+        </script>
+
+        <div class="footer">© खडक नगरपालिका — कर्मचारी बायोडाटा पृष्ठ</div>
+    </div>
+</body>
+</html>

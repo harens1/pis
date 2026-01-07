@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>सूचना</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">कर्मचारी व्यवस्थापन प्रणाली</h1>
+            <nav class="site-nav" role="navigation">
+                <ul>
+                    <li><a href="../index.php">गृहपृष्ठ</a></li>
+                    <li><a href="../employ_list.php">कर्मचारी सूची</a></li>
+                    <li><a href="../post_employee.php">कर्मचारी विवरण</a></li>
+                    <li><a href="../recommendation.php">सिफारिस</a></li>
+                    <li><a href="../transfer.php">सरुवा</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container" style="max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 10px;">
+        <h1>सूचना दर्ता</h1>
+        <form method="POST">
+            <div style="margin-bottom: 15px;">
+                <label for="notice_type"><strong>सूचना प्रकार:</strong></label>
+                <select id="notice_type" name="notice_type" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+                    <option value="">छनोट गर्नुहोस्</option>
+                    <option value="आम सूचना">आम सूचना</option>
+                    <option value="महत्वपूर्ण सूचना">महत्वपूर्ण सूचना</option>
+                    <option value="सार्वजनिक सूचना">सार्वजनिक सूचना</option>
+                    <option value="कर्मचारी सूचना">कर्मचारी सूचना</option>
+                </select>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="notice_title"><strong>सूचनाको शीर्षक:</strong></label>
+                <input type="text" id="notice_title" name="notice_title" placeholder="सूचनाको शीर्षक" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="notice_date"><strong>सूचना जारी मिति:</strong></label>
+                <input type="date" id="notice_date" name="notice_date" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="notice_content"><strong>सूचनाको विषय वस्तु:</strong></label>
+                <textarea id="notice_content" name="notice_content" rows="5" placeholder="सूचनाको पूर्ण विषय वस्तु" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;"></textarea>
+            </div>
+            <button type="submit" class="btn primary" style="width: 100%;">दर्ता गर्नुहोस्</button>
+        </form>
+    </div>
+</body>
+</html>

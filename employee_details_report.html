@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कर्मचारी विस्तृत प्रतिवेदन - खडक नगरपालिका</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="print.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Kalimati', 'Arial Unicode MS', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin: 30px 0 20px;
+            color: #2c3e50;
+        }
+
+        .page-title h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .report-header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-block {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+
+        .info-block h4 {
+            color: #2c3e50;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .info-block p {
+            font-size: 14px;
+            color: #34495e;
+            line-height: 1.5;
+        }
+
+        .photo-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .employee-photo {
+            width: 150px;
+            height: 180px;
+            border: 2px solid #3498db;
+            border-radius: 4px;
+            object-fit: cover;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .details-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 18px;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .detail-item {
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #7f8c8d;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .document-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .document-item {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 15px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+
+        .document-date {
+            font-weight: 600;
+            color: #e74c3c;
+            min-width: 100px;
+        }
+
+        .document-preview {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'Kalimati', Arial;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-print {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-print:hover {
+            background: #229954;
+        }
+
+        .btn-back {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background: #7f8c8d;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #95a5a6;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #bdc3c7;
+        }
+
+        @media print {
+            .navbar,
+            .button-group {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+            }
+
+            .details-section {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-info {
+                grid-template-columns: 1fr;
+            }
+
+            .employee-photo {
+                width: 120px;
+                height: 150px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+    <script src="bs-converter.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar-style">
+        <a href="index.html" title="गृह पृष्ठ">
+            <i class="fas fa-home"></i> गृह
+        </a>
+        <a href="employees_all.html" title="सबै कर्मचारीहरु">
+            <i class="fas fa-list"></i> सबै कर्मचारी
+        </a>
+        <a href="employee_management.html" title="कर्मचारी व्यवस्थापन">
+            <i class="fas fa-users-cog"></i> व्यवस्थापन
+        </a>
+        <a href="employee_details_report.html" title="विस्तृत प्रतिवेदन" class="active">
+            <i class="fas fa-file-pdf"></i> विस्तृत प्रतिवेदन
+        </a>
+        <a href="darwandi_report.html" title="दरवन्दी रिपोर्ट">
+            <i class="fas fa-file-alt"></i> दरवन्दी
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="page-title">
+            <h1><i class="fas fa-file-pdf"></i> कर्मचारी विस्तृत प्रतिवेदन</h1>
+            <p>कर्मचारीको सम्पूर्ण व्यक्तिगत, शैक्षिक र सेवा विवरण</p>
+        </div>
+
+        <div class="button-group">
+            <button onclick="window.print()" class="btn btn-print">
+                <i class="fas fa-print"></i> मुद्रण गर्नुहोस्
+            </button>
+            <button onclick="selectEmployee()" class="btn btn-primary">
+                <i class="fas fa-search"></i> कर्मचारी खोज्नुहोस्
+            </button>
+            <button onclick="history.back()" class="btn btn-back">
+                <i class="fas fa-arrow-left"></i> पछाडि जानुहोस्
+            </button>
+        </div>
+
+        <div id="reportContent">
+            <div class="empty-state">
+                <i class="fas fa-inbox"></i>
+                <h2>कर्मचारी विवरण नचयन गरिएको</h2>
+                <p>कर्मचारी खोज्नुहोस् बटन क्लिक गरेर कर्मचारी छान्नुहोस्</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Employee Selector Modal -->
+    <div id="selectorModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); overflow-y:auto;">
+        <div style="background:white; margin:5% auto; padding:30px; border-radius:8px; width:90%; max-width:600px;">
+            <h2>कर्मचारी छान्नुहोस्</h2>
+            <input type="text" id="employeeSearch" placeholder="नाम वा ID खोज्नुहोस्..." style="width:100%; padding:10px; margin:15px 0; border:1px solid #ddd; border-radius:4px; font-family:'Kalimati', Arial;">
+            <div id="employeeList" style="max-height:400px; overflow-y:auto; margin:15px 0;"></div>
+            <button onclick="closeSelectorModal()" style="padding:10px 20px; background:#95a5a6; color:white; border:none; border-radius:4px; cursor:pointer;">बन्द गर्नुहोस्</button>
+        </div>
+    </div>
+
+    <script>
+        // Database Functions
+        function getDatabase() {
+            const stored = localStorage.getItem('pisDatabase');
+            if (stored) {
+                return JSON.parse(stored);
+            }
+            return { employees: [], darwandi: [], users: [], systemLogs: [] };
+        }
+
+        // Select Employee
+        function selectEmployee() {
+            const db = getDatabase();
+            const modal = document.getElementById('selectorModal');
+            const list = document.getElementById('employeeList');
+
+            if (db.employees.length === 0) {
+                alert('कुनै कर्मचारी दर्ता गरिएको छैन।');
+                return;
+            }
+
+            list.innerHTML = db.employees.map((emp, index) => `
+                <div style="padding:10px; border:1px solid #ddd; margin-bottom:5px; border-radius:4px; cursor:pointer; background:#f8f9fa;" onclick="displayEmployeeReport(${index})">
+                    <strong>${emp.fullName}</strong> (${emp.id}) - ${emp.position}
+                </div>
+            `).join('');
+
+            modal.style.display = 'block';
+        }
+
+        // Close Selector Modal
+        function closeSelectorModal() {
+            document.getElementById('selectorModal').style.display = 'none';
+        }
+
+        // Display Employee Report
+        function displayEmployeeReport(index) {
+            const db = getDatabase();
+            const emp = db.employees[index];
+
+            if (!emp) return;
+
+            closeSelectorModal();
+
+            const reportContent = `
+                <div class="report-header">
+                    <div class="photo-section">
+                        ${emp.photoURL ? `<img src="${emp.photoURL}" alt="फोटो" class="employee-photo">` : 
+                          `<div style="width:150px; height:180px; background:#e0e0e0; margin:0 auto; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#999;"><i class="fas fa-user" style="font-size:48px;"></i></div>`}
+                    </div>
+                    <div class="header-info">
+                        <div class="info-block">
+                            <h4>कर्मचारी आइडी</h4>
+                            <p>${emp.id}</p>
+                        </div>
+                        <div class="info-block">
+                            <h4>पूरा नाम</h4>
+                            <p>${emp.fullName}</p>
+                        </div>
+                        <div class="info-block">
+                            <h4>पद/जागिर</h4>
+                            <p>${emp.position}</p>
+                        </div>
+                        <div class="info-block">
+                            <h4>विभाग</h4>
+                            <p>${emp.department}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- व्यक्तिगत विवरण -->
+                <div class="details-section">
+                    <div class="section-title">
+                        <i class="fas fa-user"></i> व्यक्तिगत विवरण
+                    </div>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">जन्म मिति</div>
+                            <div class="detail-value">${emp.dateOfBirth || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">बाबु को नाम</div>
+                            <div class="detail-value">${emp.fatherName || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">नागरिकता नम्बर</div>
+                            <div class="detail-value">${emp.nationalId || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">पासपोर्ट नम्बर</div>
+                            <div class="detail-value">${emp.passportNumber || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">PAN नम्बर</div>
+                            <div class="detail-value">${emp.panNumber || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">बैंक खाता नम्बर</div>
+                            <div class="detail-value">${emp.bankAccount || '-'}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- सेवा विवरण -->
+                <div class="details-section">
+                    <div class="section-title">
+                        <i class="fas fa-briefcase"></i> सेवा विवरण
+                    </div>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">कर्मचारी प्रकार</div>
+                            <div class="detail-value">${emp.employeeType || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">तह (Level)</div>
+                            <div class="detail-value">${emp.serviceLevel || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">सेवा समूह</div>
+                            <div class="detail-value">${emp.serviceGroup || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">उपसमूह</div>
+                            <div class="detail-value">${emp.subGroup || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">विशेष पद</div>
+                            <div class="detail-value">${emp.designation || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">नियुक्ति मिति</div>
+                            <div class="detail-value">${emp.joinDate || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">नियुक्ति आदेश नम्बर</div>
+                            <div class="detail-value">${emp.joiningOrder || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">मासिक तलब</div>
+                            <div class="detail-value">रु. ${emp.salary || 0}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">भत्ता</div>
+                            <div class="detail-value">रु. ${emp.allowance || 0}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">अवस्था</div>
+                            <div class="detail-value">${emp.status || '-'}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- शैक्षिक योग्यता -->
+                <div class="details-section">
+                    <div class="section-title">
+                        <i class="fas fa-graduation-cap"></i> शैक्षिक योग्यता र अनुभव
+                    </div>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">शिक्षागत योग्यता</div>
+                            <div class="detail-value">${emp.qualification || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">विशेषज्ञता</div>
+                            <div class="detail-value">${emp.specialization || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">अनुभव (वर्षहरूमा)</div>
+                            <div class="detail-value">${emp.experienceYears || 0}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">प्रशिक्षण पूरा गरिएको</div>
+                            <div class="detail-value">${emp.trainingCompleted || 'होइन'}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- सम्पर्क विवरण -->
+                <div class="details-section">
+                    <div class="section-title">
+                        <i class="fas fa-phone"></i> सम्पर्क विवरण
+                    </div>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">मुख्य फोन नम्बर</div>
+                            <div class="detail-value">${emp.phone || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">वैकल्पिक फोन नम्बर</div>
+                            <div class="detail-value">${emp.alternatePhone || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">इमेल ठेगाना</div>
+                            <div class="detail-value">${emp.email || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">स्थायी ठेगाना</div>
+                            <div class="detail-value">${emp.address || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">आपतकालीन सम्पर्क व्यक्ति</div>
+                            <div class="detail-value">${emp.emergencyContact || '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">आपतकालीन फोन नम्बर</div>
+                            <div class="detail-value">${emp.emergencyPhone || '-'}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- दस्तावेज विवरण -->
+                ${emp.appointmentDocDate || emp.adjustmentDate || emp.promotionDate || emp.deputationDate ? `
+                <div class="details-section">
+                    <div class="section-title">
+                        <i class="fas fa-file-alt"></i> दस्तावेज र सम्बन्धित मिति
+                    </div>
+                    <div class="document-section">
+                        ${emp.appointmentDocDate ? `
+                        <div class="document-item">
+                            <div class="document-date">${emp.appointmentDocDate}</div>
+                            <div>नियुक्ति दस्तावेज ${emp.appointmentDoc ? '<i class="fas fa-check" style="color:green;"></i>' : ''}</div>
+                        </div>
+                        ` : ''}
+                        ${emp.adjustmentDate ? `
+                        <div class="document-item">
+                            <div class="document-date">${emp.adjustmentDate}</div>
+                            <div>समायोजन दस्तावेज ${emp.adjustmentDoc ? '<i class="fas fa-check" style="color:green;"></i>' : ''}</div>
+                        </div>
+                        ` : ''}
+                        ${emp.promotionDate ? `
+                        <div class="document-item">
+                            <div class="document-date">${emp.promotionDate}</div>
+                            <div>बढुवा दस्तावेज ${emp.promotionDoc ? '<i class="fas fa-check" style="color:green;"></i>' : ''}</div>
+                        </div>
+                        ` : ''}
+                        ${emp.deputationDate ? `
+                        <div class="document-item">
+                            <div class="document-date">${emp.deputationDate}</div>
+                            <div>काज दस्तावेज ${emp.deputationDoc ? '<i class="fas fa-check" style="color:green;"></i>' : ''}</div>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+                ` : ''}
+
+                <!-- अतिरिक्त जानकारी -->
+                ${emp.remarks || emp.extraInfo ? `
+                <div class="details-section">
+                    <div class="section-title">
+                        <i class="fas fa-sticky-note"></i> अतिरिक्त जानकारी
+                    </div>
+                    <div class="details-grid">
+                        ${emp.extraInfo ? `
+                        <div class="detail-item">
+                            <div class="detail-label">थप जानकारी</div>
+                            <div class="detail-value">${emp.extraInfo}</div>
+                        </div>
+                        ` : ''}
+                        ${emp.remarks ? `
+                        <div class="detail-item">
+                            <div class="detail-label">टिप्पणीहरू</div>
+                            <div class="detail-value">${emp.remarks}</div>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+                ` : ''}
+
+                <!-- सिस्टम जानकारी -->
+                <div class="details-section">
+                    <div class="section-title">
+                        <i class="fas fa-info-circle"></i> सिस्टम जानकारी
+                    </div>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">दर्ता मिति</div>
+                            <div class="detail-value">${emp.createdAt ? new Date(emp.createdAt).toLocaleDateString('ne-NP') : '-'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">अन्तिम अपडेट</div>
+                            <div class="detail-value">${emp.updatedAt ? new Date(emp.updatedAt).toLocaleDateString('ne-NP') : '-'}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('reportContent').innerHTML = reportContent;
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('selectorModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Search employees in selector
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('employeeSearch');
+            if (searchInput) {
+                searchInput.addEventListener('keyup', function(e) {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const db = getDatabase();
+                    const filtered = db.employees.filter(emp =>
+                        emp.fullName.toLowerCase().includes(searchTerm) ||
+                        emp.id.toLowerCase().includes(searchTerm)
+                    );
+
+                    const list = document.getElementById('employeeList');
+                    list.innerHTML = filtered.map((emp, index) => `
+                        <div style="padding:10px; border:1px solid #ddd; margin-bottom:5px; border-radius:4px; cursor:pointer; background:#f8f9fa;" onclick="displayEmployeeReport(${index})">
+                            <strong>${emp.fullName}</strong> (${emp.id}) - ${emp.position}
+                        </div>
+                    `).join('');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

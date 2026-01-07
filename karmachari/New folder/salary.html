@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>पारिश्रमिक</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">कर्मचारी व्यवस्थापन प्रणाली</h1>
+            <nav class="site-nav" role="navigation">
+                <ul>
+                    <li><a href="../index.php">गृहपृष्ठ</a></li>
+                    <li><a href="../employ_list.php">कर्मचारी सूची</a></li>
+                    <li><a href="../post_employee.php">कर्मचारी विवरण</a></li>
+                    <li><a href="../recommendation.php">सिफारिस</a></li>
+                    <li><a href="../transfer.php">सरुवा</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container" style="max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 10px;">
+        <h1>पारिश्रामिक विवरण</h1>
+        <form method="POST">
+            <div style="margin-bottom: 15px;">
+                <label for="employee_no"><strong>क.सं.नं.:</strong></label>
+                <input type="text" id="employee_no" name="employee_no" placeholder="कर्मचारी नम्बर" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="employee_name"><strong>कर्मचारी नाम:</strong></label>
+                <input type="text" id="employee_name" name="employee_name" placeholder="नाम" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="salary_amount"><strong>महिना आय:</strong></label>
+                <input type="number" id="salary_amount" name="salary_amount" placeholder="राशि" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="allowance"><strong>भत्ता:</strong></label>
+                <input type="number" id="allowance" name="allowance" placeholder="भत्ता राशि" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="deduction"><strong>कटौति:</strong></label>
+                <input type="number" id="deduction" name="deduction" placeholder="कटौति राशि" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="salary_month"><strong>पारिश्रामिक महिना:</strong></label>
+                <input type="month" id="salary_month" name="salary_month" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;">
+            </div>
+            <button type="submit" class="btn primary" style="width: 100%;">दर्ता गर्नुहोस्</button>
+        </form>
+    </div>
+</body>
+</html>
