@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>कर्मचारी डाटा इनपुट - खडक नगरपालिका</title>
+    <title>कर्मचारी डाटा प्रविष्टि - खडक नगरपालिका</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="navbar.css">
     <style>
@@ -359,8 +359,8 @@
         <a href="index.html" title="गृह पृष्ठ">
             <i class="fas fa-home"></i> गृह
         </a>
-        <a href="employee_data_input.html" title="डाटा इनपुट" class="active">
-            <i class="fas fa-keyboard"></i> डाटा इनपुट
+        <a href="employee_data_input.html" title="डाटा प्रविष्टि" class="active">
+            <i class="fas fa-keyboard"></i> डाटा प्रविष्टि
         </a>
         <a href="employee_management.html" title="कर्मचारी व्यवस्थापन">
             <i class="fas fa-users-cog"></i> व्यवस्थापन
@@ -376,8 +376,8 @@
     <div class="container">
         <!-- Page Header -->
         <div class="page-header">
-            <h1><i class="fas fa-keyboard"></i> कर्मचारी डाटा इनपुट फर्म</h1>
-            <p>कर्मचारीको सम्पूर्ण व्यक्तिगत, शैक्षिक र सेवा सम्बन्धी जानकारी दर्ज गर्नुहोस्</p>
+            <h1><i class="fas fa-keyboard"></i> कर्मचारी डाटा प्रविष्टि फर्म</h1>
+            <p>कर्मचारीको सम्पूर्ण व्यक्तिगत, शैक्षिक र सेवा सम्बन्धी जानकारी प्रविष्टि गर्नुहोस्</p>
             
             <div class="progress-bar">
                 <div class="progress-step active" onclick="goToStep(1)">
@@ -393,7 +393,7 @@
                     <i class="fas fa-briefcase"></i><br>नियुक्ति
                 </div>
                 <div class="progress-step" onclick="goToStep(5)">
-                    <i class="fas fa-file-alt"></i><br>दस्तावेज
+                    <i class="fas fa-file-alt"></i><br>कागजात
                 </div>
                 <div class="progress-step" onclick="goToStep(6)">
                     <i class="fas fa-check-circle"></i><br>समीक्षा
@@ -409,7 +409,7 @@
 
             <div class="info-box">
                 <i class="fas fa-info-circle"></i>
-                कर्मचारीको मूल जानकारी दर्ज गर्नुहोस्। तारा (*) भएका फिल्ड अनिवार्य छन्।
+                कर्मचारीको मूल जानकारी प्रविष्टि गर्नुहोस्। तारा (*) भएका फिल्ड अनिवार्य छन्।
             </div>
 
             <div class="form-row">
@@ -431,14 +431,14 @@
                     <div class="help-text">BS मा स्वचालितः रूपान्तरित हुनेछ</div>
                 </div>
                 <div class="form-group">
-                    <label>बाबु को नाम</label>
-                    <input type="text" id="fatherName" placeholder="बाबु को नाम">
+                    <label>बाबुको नाम</label>
+                    <input type="text" id="fatherName" placeholder="बाबुको नाम">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label>पद/जागिर <span class="required">*</span></label>
+                    <label>पद/तह <span class="required">*</span></label>
                     <input type="text" id="position" placeholder="जस्तै: शिक्षक, कर्मचारी..." required>
                 </div>
                 <div class="form-group">
@@ -458,19 +458,32 @@
                     <label>तह (Level)</label>
                     <select id="serviceLevel">
                         <option value="">चयन गर्नुहोस्</option>
-                        <option value="प्र.क">प्र.क (Principal)</option>
-                        <option value="उ.क">उ.क (Senior)</option>
-                        <option value="म.क">म.क (Junior)</option>
+                        <option value="प्रमुख प्रशासकीय अधिकृत"> (CAO)</option>
+                        <option value="बरिष्ठ अधिकृत">बरिष्ठ अधिकृत (Senior Officer)</option>
+                        <option value="अधिकृत"> अधिकृत सातौं (Officers)</option>
+                        <option value="अधिकृत"> अधिकृत छैठौं (Officers)</option>
+                        <option value="सहायक"> सहायक पाँचौं (Assistants)</option>
+                        <option value="सहायक"> सहायक चौथो (Assistants)</option>
+                        <option value="सहायक"> कम्प्युटर अपरेटर (Assistants)</option>
+                        <option value="श्रेणी बिहिन"> कार्यालय सहयोगी (Assistants)</option>
+                        <option value="करार">  अधिकृत छैठौं (Officer)</option>
+                        <option value="करार">  पाँचौं (Assistant)</option>
+                        <option value="करार">  सहायक क. अपरेटर (Assistant)</option>
+                        <option value="करार">  कार्यालय सहयोगी (Assistant)</option>
+                        <option value="करार">  सुरक्षा  (Assistant)</option>
+                        <option value="दैज्या">  डोरहाजिर </option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>सेवा समूह</label>
                     <select id="serviceGroup">
                         <option value="">चयन गर्नुहोस्</option>
-                        <option value="क">क समूह</option>
-                        <option value="ख">ख समूह</option>
-                        <option value="ग">ग समूह</option>
-                        <option value="घ">घ समूह</option>
+                        <option value="क">स्थानीय इन्जिनियरिङ्ग सेवा</option>
+                        <option value="ख">स्थानीय कृषि सेवा</option>
+                        <option value="ग">स्थानीय प्रशासन सेवा</option>
+                        <option value="घ">स्थानीय वन सेवा</option>
+                        <option value="घ">स्थानीय शिक्षा सेवा</option>
+                        <option value="घ">स्थानीय स्वास्थ्य सेवा</option>
                     </select>
                 </div>
             </div>
@@ -481,8 +494,8 @@
                     <input type="text" id="subGroup" placeholder="जस्तै: १, २, ३...">
                 </div>
                 <div class="form-group">
-                    <label>विभाग</label>
-                    <input type="text" id="department" placeholder="शाखा/विभाग">
+                    <label>शाखा</label>
+                    <input type="text" id="department" placeholder="शाखा">
                 </div>
             </div>
 
@@ -498,7 +511,7 @@
                     <i class="fas fa-arrow-left"></i> पछाडि जानुहोस्
                 </button>
                 <button class="btn btn-primary" onclick="goToStep(2)">
-                    अगली चरण <i class="fas fa-arrow-right"></i>
+                    अर्को चरण <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </div>
@@ -511,7 +524,7 @@
 
             <div class="info-box">
                 <i class="fas fa-info-circle"></i>
-                कर्मचारीको शैक्षिक योग्यता र कार्य अनुभव दर्ज गर्नुहोस्।
+                कर्मचारीको शैक्षिक योग्यता र कार्य अनुभव प्रविष्टि गर्नुहोस्।
             </div>
 
             <div class="form-row">
@@ -544,7 +557,7 @@
                     <i class="fas fa-arrow-left"></i> पछाडि जानुहोस्
                 </button>
                 <button class="btn btn-primary" onclick="goToStep(3)">
-                    अगली चरण <i class="fas fa-arrow-right"></i>
+                    अर्को चरण <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </div>
@@ -557,7 +570,7 @@
 
             <div class="info-box">
                 <i class="fas fa-info-circle"></i>
-                कर्मचारीको फोन नम्बर र ठेगाना विवरण दर्ज गर्नुहोस्। फोन नम्बर अनिवार्य छ।
+                कर्मचारीको फोन नम्बर र ठेगाना विवरण प्रविष्टि गर्नुहोस्। फोन नम्बर अनिवार्य छ।
             </div>
 
             <div class="form-row">
@@ -598,7 +611,7 @@
                     <i class="fas fa-arrow-left"></i> पछाडि जानुहोस्
                 </button>
                 <button class="btn btn-primary" onclick="goToStep(4)">
-                    अगली चरण <i class="fas fa-arrow-right"></i>
+                    अर्को चरण <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </div>
@@ -611,7 +624,7 @@
 
             <div class="info-box">
                 <i class="fas fa-info-circle"></i>
-                कर्मचारीको नियुक्ति, तलब र अन्य नियुक्ति सम्बन्धी जानकारी दर्ज गर्नुहोस्।
+                कर्मचारीको नियुक्ति, तलब र अन्य नियुक्ति सम्बन्धी जानकारी प्रविष्टि गर्नुहोस्।
             </div>
 
             <div class="form-row">
@@ -643,7 +656,7 @@
                     <div class="help-text">BS मा स्वचालितः रूपान्तरित हुनेछ</div>
                 </div>
                 <div class="form-group">
-                    <label>नियुक्ति आदेश नम्बर</label>
+                    <label>नियुक्ति चलानी नम्बर</label>
                     <input type="text" id="joiningOrder" placeholder="जस्तै: २०२०/०१/१०">
                 </div>
             </div>
@@ -680,7 +693,7 @@
                     <i class="fas fa-arrow-left"></i> पछाडि जानुहोस्
                 </button>
                 <button class="btn btn-primary" onclick="goToStep(5)">
-                    अगली चरण <i class="fas fa-arrow-right"></i>
+                    अर्को चरण <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </div>
@@ -688,12 +701,12 @@
         <!-- Step 5: Documents -->
         <div class="form-section" id="step5">
             <div class="section-title">
-                <i class="fas fa-file-alt"></i> चरण ५: दस्तावेज र फोटो
+                <i class="fas fa-file-alt"></i> चरण ५: कागजात र फोटो
             </div>
 
             <div class="info-box">
                 <i class="fas fa-info-circle"></i>
-                कर्मचारीको फोटो र दस्तावेज अपलोड गर्नुहोस्। यो वैकल्पिक छ।
+                कर्मचारीको फोटो र पत्र अपलोड गर्नुहोस्। यो वैकल्पिक हो।
             </div>
 
             <div class="form-row">
@@ -711,44 +724,44 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label>नियुक्ति दस्तावेज मिति</label>
+                    <label>नियुक्ति पत्र मिति</label>
                     <input type="date" id="appointmentDocDate">
                 </div>
                 <div class="form-group">
-                    <label>नियुक्ति दस्तावेज अपलोड</label>
+                    <label>नियुक्ति पत्र अपलोड</label>
                     <input type="file" id="appointmentDoc" accept="image/*,.pdf">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label>समायोजन दस्तावेज मिति</label>
+                    <label>समायोजन पत्र मिति</label>
                     <input type="date" id="adjustmentDate">
                 </div>
                 <div class="form-group">
-                    <label>समायोजन दस्तावेज अपलोड</label>
+                    <label>समायोजन पत्र अपलोड</label>
                     <input type="file" id="adjustmentDoc" accept="image/*,.pdf">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label>बढुवा दस्तावेज मिति</label>
+                    <label>बढुवा पत्र मिति</label>
                     <input type="date" id="promotionDate">
                 </div>
                 <div class="form-group">
-                    <label>बढुवा दस्तावेज अपलोड</label>
+                    <label>बढुवा पत्र अपलोड</label>
                     <input type="file" id="promotionDoc" accept="image/*,.pdf">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label>काज दस्तावेज मिति</label>
+                    <label>काज पत्र मिति</label>
                     <input type="date" id="deputationDate">
                 </div>
                 <div class="form-group">
-                    <label>काज दस्तावेज अपलोड</label>
+                    <label>काज पत्र अपलोड</label>
                     <input type="file" id="deputationDoc" accept="image/*,.pdf">
                 </div>
             </div>
@@ -758,7 +771,7 @@
                     <i class="fas fa-arrow-left"></i> पछाडि जानुहोस्
                 </button>
                 <button class="btn btn-primary" onclick="goToStep(6)">
-                    अगली चरण <i class="fas fa-arrow-right"></i>
+                    अर्को चरण <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </div>
@@ -771,7 +784,7 @@
 
             <div class="info-box">
                 <i class="fas fa-info-circle"></i>
-                कृपया तपाईंले दर्ज गरेको जानकारी समीक्षा गर्नुहोस् र सही भएमा जमा गर्नुहोस्।
+                कृपया तपाईंले प्रविष्टि गरेको जानकारी समीक्षा गर्नुहोस् र सही भएमा जमा गर्नुहोस्।
             </div>
 
             <div class="summary-section" id="summaryContent">
@@ -1029,3 +1042,4 @@
     </script>
 </body>
 </html>
+
