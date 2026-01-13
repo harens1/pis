@@ -951,11 +951,11 @@
                 </div>
 
                 <div style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 4px;">
-                    <h4 style="margin-top: 0;">सांख्यिकी:</h4>
+                    <h4 style="margin-top: 0;">तथ्यांक:</h4>
                     <p>कुल कर्मचारी: <strong id="totalEmployeeCount">-</strong></p>
                     <p>कुल दरवन्दी: <strong id="totalDarwandiCount">-</strong></p>
                     <button onclick="updateStatistics()" class="btn btn-info">
-                        <i class="fas fa-sync"></i> सांख्यिकी अपडेट गर्नुहोस्
+                        <i class="fas fa-sync"></i> तथ्यांक अपडेट गर्नुहोस्
                     </button>
                 </div>
             </div>
@@ -1028,13 +1028,13 @@
                     employees: [
                         {
                             id: 1,
-                            fullName: "राम बहादुर श्रेष्ठ",
-                            position: "प्रशासकिय अधिकृत",
-                            employeeType: "निजामती",
-                            department: "प्रशासन",
-                            phone: "९८०१२३४५६७",
-                            email: "ram@khadakmun.gov.np",
-                            address: "वडा नं. १, खडक",
+                            fullName: "चन्द्र बहादुर चौधरी",
+                            position: "पशु विकास अधिकृत",
+                            employeeType: "स्थानीय",
+                            department: "आर्थिक विकास शाखा",
+                            phone: "९८००००००००",
+                            email: "chandra@khadakmun.gov.np",
+                            address: "वडा नं. ८, खडक",
                             joinDate: "२०७५-०१-१५",
                             salary: 75000,
                             status: "सक्रिय",
@@ -1283,9 +1283,11 @@
             
             document.getElementById('totalEmployees').textContent = employees.length;
             document.getElementById('nijamatiEmployees').textContent = 
-                employees.filter(e => e.employeeType === 'निजामती').length;
+                employees.filter(e => e.employeeType === 'स्थानीय तह/संघ समायोजन').length;
             document.getElementById('localEmployees').textContent = 
-                employees.filter(e => e.employeeType === 'स्थानीय तह').length;
+                employees.filter(e => e.employeeType === 'स्थानीय तह/प्रदेश लोक सेवा').length;
+             document.getElementById('localEmployees').textContent = 
+                employees.filter(e => e.employeeType === 'स्थानीय तह/स्थानीय निकाय').length;
             document.getElementById('contractEmployees').textContent = 
                 employees.filter(e => e.employeeType === 'करार').length;
         }
@@ -1521,13 +1523,13 @@
                 const details = `
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div><strong>पूरा नाम:</strong><br>${employee.fullName}</div>
-                        <div><strong>पद/जागिर:</strong><br>${employee.position}</div>
+                        <div><strong>पद/तह:</strong><br>${employee.position}</div>
                         <div><strong>कर्मचारी प्रकार:</strong><br>${employee.employeeType}</div>
-                        <div><strong>शाखा/विभाग:</strong><br>${employee.department || '-'}</div>
+                        <div><strong>शाखा/उपशाखा/वडा/स्वास्थ्य संस्था:</strong><br>${employee.department || '-'}</div>
                         <div><strong>सम्पर्क नम्बर:</strong><br>${employee.phone}</div>
                         <div><strong>इमेल:</strong><br>${employee.email || '-'}</div>
                         <div><strong>ठेगाना:</strong><br>${employee.address || '-'}</div>
-                        <div><strong>नागरिकता/पहिचान:</strong><br>${employee.nationalId || '-'}</div>
+                        <div><strong>नागरिकता/रा.प.पत्र:</strong><br>${employee.nationalId || '-'}</div>
                         <div><strong>नियुक्ति मिति:</strong><br>${employee.joinDate || '-'}</div>
                         <div><strong>तलब:</strong><br>${employee.salary ? 'रु. ' + employee.salary.toLocaleString('ne-NP') : '-'}</div>
                         <div><strong>आपतकालीन सम्पर्क:</strong><br>${employee.emergencyContact || '-'}</div>
